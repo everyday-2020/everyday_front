@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
+import Room from "./containers/room";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
         </Route>
         <Route path="/rooms">
           <RoomList />
+          <Switch>
+            <Route path="/:roomId">
+              <Room />
+            </Route>
+          </Switch>
         </Route>
       </Switch>
     </Router>
