@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "@yarnpkg/pnpify": "^2.0.0-rc.22"
+    "@yarnpkg/pnpify": "^2.0.0-rc.22",
+    "prettier": "^2.0.5"
   }
 }
