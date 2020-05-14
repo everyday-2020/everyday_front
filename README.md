@@ -1,4 +1,4 @@
-### './setup.sh'
+### `./setup.sh`
 
 Installs and updates required dependencies for the yarn. 
 
