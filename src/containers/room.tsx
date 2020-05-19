@@ -1,12 +1,27 @@
 import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
-export default () => {
+import DateBoard from "../components/dateboard";
+
+const Room: React.FC = () => {
   return (
     <>
-      <div className="content" style={{ height: "3000px" }}></div>
+      <div
+        className="content"
+        style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}
+      >
+        <DateBoard date={new Date(1995, 11, 14)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+        <DateBoard date={new Date(1995, 11, 13)} />
+      </div>
       <BottomNavigation
         style={{ position: "sticky", bottom: 0, backgroundColor: "#f0f0f0" }}
         showLabels
@@ -16,3 +31,5 @@ export default () => {
     </>
   );
 };
+
+export default Room;
