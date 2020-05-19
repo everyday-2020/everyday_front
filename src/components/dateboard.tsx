@@ -17,7 +17,7 @@ interface DateBoardProps {
 }
 const DateBoard: FunctionComponent<DateBoardProps> = ({
   date,
-  videos = vids,
+  videos = [],
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
@@ -28,21 +28,32 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
       .force("center", forceCenter(width / 2, height / 2))
       .force(
         "collision",
-        forceCollide<any>().radius(function ({ clicks }) {
-          return radius(clicks);
-        })
+        forceCollide<VideoEntity & SimulationNodeDatum>().radius(({ clicks }) =>
+          radius(clicks)
+        )
       );
+    const groups = select(svgRef.current)
+      .selectAll<SVGGElement, unknown>("g")
+      .data<VideoEntity & SimulationNodeDatum>(videos)
+      .join("g");
+    console.log(groups);
+
+    const circles = groups
+      .append("circle")
+      .attr("r", ({ clicks }) => radius(clicks))
+      .attr("stroke", "black")
+      .attr("stroke-width", 3)
+      .attr("fill", "transparent")
+      .attr("fill", (d) => {
+        return "url(#image)";
+      })
+      .on("click", (d, i) => {});
+    const captions = groups
+      .append("text")
+      .text(({ user }: VideoEntity) => user.nickname)
+      .attr("text-anchor", "middle");
     const tick = () => {
-      const u = select(svgRef.current)
-        .selectAll<SVGCircleElement, unknown>("circle")
-        .data<VideoEntity & SimulationNodeDatum>(videos);
-      u.enter()
-        .append("circle")
-        .attr("r", ({ clicks }) => radius(clicks))
-        .attr("stroke", "black")
-        .attr("stroke-width", 3)
-        .attr("fill", "transparent")
-        .merge(u)
+      circles
         .attr("cx", (d) => {
           const r = radius(d.clicks);
           return (d.x = Math.max(r, Math.min(d.x || 0, width - r)));
@@ -50,11 +61,10 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
         .attr("cy", (d) => {
           const r = radius(d.clicks);
           return (d.y = Math.max(r, Math.min(d.y || 0, height - r)));
-        })
-        .attr("fill", (d) => {
-          return "url(#image)";
         });
-      u.exit().remove();
+      captions
+        .attr("x", ({ x }) => x || 0)
+        .attr("y", ({ clicks, y }) => 15 + radius(clicks) + (y || 0));
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -65,7 +75,7 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
         minHeight: "100px",
         display: "flex",
         flexDirection: "column",
-        padding: "10px 0",
+        paddingTop: "10px",
       }}
     >
       <span style={{ margin: "0 auto" }}>{date.toLocaleDateString()}</span>
@@ -73,8 +83,8 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
         ref={svgRef}
         style={{
           flex: 1,
-          backgroundColor: "#f0f00f",
-          minHeight: `${videos.length * 96}px`,
+          backgroundColor: "#f0f0df",
+          minHeight: `${videos.length * 64}px`,
         }}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -98,53 +108,3 @@ export default DateBoard;
 const radius = (clicks: number) => {
   return 16 * Math.log((clicks + 1) * Math.exp(1));
 };
-const vids: VideoEntity[] = [
-  {
-    id: 1,
-    createdAt: new Date(2020, 3, 14),
-    modifiedAt: new Date(2020, 3, 14),
-    clicks: 1,
-    length: 300,
-    user: {
-      id: 1,
-      createdAt: new Date(2020, 3, 14),
-      modifiedAt: new Date(2020, 3, 14),
-      nickname: "abc",
-      username: "test",
-      profilePic: "dog",
-    },
-    location: "localhost",
-  },
-  {
-    id: 2,
-    createdAt: new Date(2020, 3, 14),
-    modifiedAt: new Date(2020, 3, 14),
-    clicks: 2,
-    length: 300,
-    user: {
-      id: 2,
-      createdAt: new Date(2020, 3, 14),
-      modifiedAt: new Date(2020, 3, 14),
-      nickname: "abc",
-      username: "test",
-      profilePic: "dog",
-    },
-    location: "localhost",
-  },
-  {
-    id: 3,
-    createdAt: new Date(2020, 3, 14),
-    modifiedAt: new Date(2020, 3, 14),
-    clicks: 3,
-    length: 300,
-    user: {
-      id: 6,
-      createdAt: new Date(2020, 3, 14),
-      modifiedAt: new Date(2020, 3, 14),
-      nickname: "abc",
-      username: "test",
-      profilePic: "dog",
-    },
-    location: "localhost",
-  },
-];
