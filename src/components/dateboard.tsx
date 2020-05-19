@@ -9,6 +9,7 @@ import {
 } from "d3-force";
 
 import { VideoEntity } from "../types/entities";
+import logo from "../logo.svg";
 
 interface DateBoardProps {
   date: Date;
@@ -28,7 +29,7 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
       .force(
         "collision",
         forceCollide<any>().radius(function ({ clicks }) {
-          return clicks * 16 || 0;
+          return radius(clicks);
         })
       );
     const tick = () => {
@@ -37,15 +38,21 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
         .data<VideoEntity & SimulationNodeDatum>(videos);
       u.enter()
         .append("circle")
-        .attr("r", ({ clicks }) => clicks * 16)
+        .attr("r", ({ clicks }) => radius(clicks))
+        .attr("stroke", "black")
+        .attr("stroke-width", 3)
+        .attr("fill", "transparent")
         .merge(u)
         .attr("cx", (d) => {
-          const r = d.clicks * 16;
+          const r = radius(d.clicks);
           return (d.x = Math.max(r, Math.min(d.x || 0, width - r)));
         })
         .attr("cy", (d) => {
-          const r = d.clicks * 16;
+          const r = radius(d.clicks);
           return (d.y = Math.max(r, Math.min(d.y || 0, height - r)));
+        })
+        .attr("fill", (d) => {
+          return "url(#image)";
         });
       u.exit().remove();
       requestAnimationFrame(tick);
@@ -69,13 +76,28 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
           backgroundColor: "#f0f00f",
           minHeight: `${videos.length * 96}px`,
         }}
-      />
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <pattern
+            id="image"
+            patternContentUnits="objectBoundingBox"
+            height="100%"
+            width="100%"
+          >
+            <image height="1" width="1" xlinkHref={logo}></image>
+          </pattern>
+        </defs>
+      </svg>
     </div>
   );
 };
 
 export default DateBoard;
 
+const radius = (clicks: number) => {
+  return 16 * Math.log((clicks + 1) * Math.exp(1));
+};
 const vids: VideoEntity[] = [
   {
     id: 1,
