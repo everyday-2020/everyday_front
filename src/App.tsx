@@ -4,6 +4,8 @@ import Button from "@material-ui/core/Button";
 
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
+//import { VideoUpload } from "./containers/videoUpload";
+import { VideoSelect } from "./containers/videoSelect";
 
 function App() {
   return (
@@ -14,6 +16,9 @@ function App() {
         </Route>
         <Route path="/rooms">
           <RoomList />
+        </Route>
+        <Route path="/upload">
+          <VideoSelect />
         </Route>
         <Route path="/">
           <div
