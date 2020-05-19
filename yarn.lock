@@ -2078,6 +2078,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-force@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@types/d3-force@npm:1.2.1"
+  checksum: 3/1d9e033642f3c4c64aa0206b4fde9855874f438a028745694fe91c1907bbca75a3a5608392d4cf2d155c77d06de61c22b6ec2e8db9b924c5115979044c8181cd
+  languageName: node
+  linkType: hard
+
+"@types/d3-selection@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@types/d3-selection@npm:1.4.1"
+  checksum: 3/15eeba9663bd3f907da5eafa09dd462066ed7765212c193f9552a5190f3704bf240585fe0007476a107e948b0310a45dfe67b865607fe8b4255fde5f58043bd8
+  languageName: node
+  linkType: hard
+
 "@types/emscripten@npm:^1.38.0":
   version: 1.39.3
   resolution: "@types/emscripten@npm:1.39.3"
@@ -5099,6 +5113,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-dispatch@npm:1":
+  version: 1.0.6
+  resolution: "d3-dispatch@npm:1.0.6"
+  checksum: 3/2bec4b1395b167974d8fc6b2d5b2a843efd90c377e1749202cf2241557a0bfc7e5eaa465de0f39b5d977d2ae60c5ac982d2f043482bbfb49df53028b53769c98
+  languageName: node
+  linkType: hard
+
+"d3-force@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "d3-force@npm:2.0.1"
+  dependencies:
+    d3-dispatch: 1
+    d3-quadtree: 1
+    d3-timer: 1
+  checksum: 3/cb0e08546d79463d66ed90c734e80c6ae93bf6fc05b83c38232f478ef36195efd13e02e1b77619837cb16a3de724349a2bbda3b619fd4e757aa3f81a69a43e93
+  languageName: node
+  linkType: hard
+
+"d3-quadtree@npm:1":
+  version: 1.0.7
+  resolution: "d3-quadtree@npm:1.0.7"
+  checksum: 3/ec3d02c75d75ac587ef7e00bfb55bfe0313aa84960f01a3d39f19d28277acae158c5b13bddd6612c82071981639fd08d07b51521cb669d9a44a51a0232827a19
+  languageName: node
+  linkType: hard
+
+"d3-selection@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "d3-selection@npm:1.4.1"
+  checksum: 3/9073f9041f6261a78564002bee2f8828446dca7870124e9a3cbd6ad4ecb39dcda1599604a43c2e6b3685f3e7f548cacaa9470682c374706f19c449f1af2490a9
+  languageName: node
+  linkType: hard
+
+"d3-timer@npm:1":
+  version: 1.0.10
+  resolution: "d3-timer@npm:1.0.10"
+  checksum: 3/e302132e1fc8989a5693fc7d265a034d7634ec87a1a8ed85e5959715d9da413971d9289f0ef304c67397d2acb4ebebd99f5adf0c8819929b8f6c588a1fd01d36
+  languageName: node
+  linkType: hard
+
 "d@npm:1, d@npm:^1.0.1":
   version: 1.0.1
   resolution: "d@npm:1.0.1"
@@ -6168,12 +6221,16 @@ __metadata:
     "@testing-library/jest-dom": ^5.7.0
     "@testing-library/react": ^10.0.4
     "@testing-library/user-event": ^10.2.3
+    "@types/d3-force": ^1.2.1
+    "@types/d3-selection": ^1.4.1
     "@types/jest": ^25.2.2
     "@types/node": ^14.0.1
     "@types/react": ^16.9.35
     "@types/react-dom": ^16.9.8
     "@types/react-router-dom": ^5.1.5
     "@yarnpkg/pnpify": ^2.0.0-rc.22
+    d3-force: ^2.0.1
+    d3-selection: ^1.4.1
     husky: ^4.2.5
     node-sass: ^4.14.1
     prettier: ^2.0.5
