@@ -1,5 +1,5 @@
 import React, { FC, useRef, useEffect } from "react";
-import { select } from "d3-selection";
+import { select, event } from "d3-selection";
 import {
   forceSimulation,
   forceManyBody,
@@ -7,6 +7,7 @@ import {
   forceCollide,
   SimulationNodeDatum,
 } from "d3-force";
+import { drag } from "d3-drag";
 
 import { VideoEntity } from "../types/entities";
 import "./videoBubbleCanvas.css";
@@ -16,27 +17,41 @@ interface VideoBubbleCanvasProps {
   videos: VideoEntity[];
 }
 
+type Datum = SimulationNodeDatum & VideoEntity;
+
+const FONT_SIZE = 16;
+
 const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    const { width = 0, height = 0 } =
+    const { width: rootWidth = 0, height: rootHeight = 0 } =
       svgRef.current?.getBoundingClientRect() || {};
-    const simulation = forceSimulation<VideoEntity & SimulationNodeDatum>(
-      videos
-    )
+
+    const radius = (clicks: number) => {
+      return 16 * (Math.log(clicks + 1) + 1);
+    };
+    const radiuses = videos.map(({ clicks }) => radius(clicks));
+
+    let simulation = forceSimulation<Datum>(videos)
+      .alphaMin(0.1)
       .force("charge", forceManyBody().strength(-2))
-      .force("center", forceCenter(width / 2, height / 2))
+      .force("center", forceCenter(rootWidth / 2, rootHeight / 2))
       .force(
         "collision",
-        forceCollide<VideoEntity & SimulationNodeDatum>().radius(({ clicks }) =>
-          radius(clicks)
-        )
+        forceCollide<Datum>().radius((d, i) => radiuses[i] + FONT_SIZE)
       );
 
     const groups = select(svgRef.current)
-      .selectAll<SVGGElement, unknown>("g")
-      .data<VideoEntity & SimulationNodeDatum>(videos)
-      .join("g");
+      .selectAll<SVGGElement, Datum>("g")
+      .data(videos as Datum[])
+      .join("g")
+      .call(
+        drag<SVGGElement, Datum>().on("drag", (d) => {
+          simulation.alpha(0.5).restart();
+          d.x = event.x;
+          d.y = event.y;
+        })
+      );
 
     const captions = groups
       .append("text")
@@ -46,8 +61,8 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
     const thumbnails = groups
       .append("foreignObject")
       .attr("fill", "black")
-      .attr("width", ({ clicks }) => 2 * radius(clicks))
-      .attr("height", ({ clicks }) => 2 * radius(clicks));
+      .attr("width", (d, i) => 2 * radiuses[i])
+      .attr("height", (d, i) => 2 * radiuses[i]);
 
     thumbnails
       .append("xhtml:video")
@@ -61,27 +76,24 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
     const tick = () => {
       captions
         .attr("x", ({ x }) => x || 0)
-        .attr("y", ({ clicks, y }) => 15 + radius(clicks) + (y || 0));
+        .attr("y", ({ y }, i) => 15 + radiuses[i] + (y || 0));
       thumbnails
-        .attr("x", (d) => {
-          const r = radius(d.clicks);
-          d.x = Math.max(r, Math.min(d.x || 0, width - r));
+        .attr("x", (d, i) => {
+          const r = radiuses[i];
+          d.x = Math.max(r, Math.min(d.x || 0, rootWidth - r));
           return (d.x || 0) - r;
         })
-        .attr("y", (d) => {
-          const r = radius(d.clicks);
-          d.y = Math.max(r, Math.min(d.y || 0, height - r));
+        .attr("y", (d, i) => {
+          const r = radiuses[i];
+          d.y = Math.max(r, Math.min(d.y || 0, rootHeight - r));
           return (d.y || 0) - r;
         })
-        .attr("clip-path", ({ clicks, x = 0, y = 0 }) => {
-          const r = radius(clicks);
+        .attr("clip-path", ({ clicks, x = 0, y = 0 }, i) => {
+          const r = radiuses[i];
           return `circle(${r}px at ${-x + 2 * r}px ${-y + 2 * r}px )`;
         });
-      // requestAnimationFrame(tick);
     };
     simulation.on("tick", tick);
-
-    // requestAnimationFrame(tick);
   }, []);
   return (
     <svg
@@ -90,6 +102,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
         flex: 1,
         backgroundColor: "#f0f0f0",
         minHeight: `${videos.length * 64}px`,
+        fontSize: `${FONT_SIZE}`,
       }}
       xmlns="http://www.w3.org/2000/svg"
     ></svg>
@@ -97,7 +110,3 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
 };
 
 export default VideoBubbleCanvas;
-
-const radius = (clicks: number) => {
-  return 16 * Math.log((clicks + 1) * Math.exp(1));
-};

@@ -2078,6 +2078,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-drag@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@types/d3-drag@npm:1.2.3"
+  dependencies:
+    "@types/d3-selection": "*"
+  checksum: 3/e913006cac1cc7d15a619dfa050d1b6f581b222ccde1e06bd0d0490dbf504fdc58aeff3aa27aeb84b87a160a0a8dd3c39ff482eff2d7110cf9fcf84b188574e3
+  languageName: node
+  linkType: hard
+
 "@types/d3-force@npm:^1.2.1":
   version: 1.2.1
   resolution: "@types/d3-force@npm:1.2.1"
@@ -2085,7 +2094,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/d3-selection@npm:^1.4.1":
+"@types/d3-selection@npm:*, @types/d3-selection@npm:^1.4.1":
   version: 1.4.1
   resolution: "@types/d3-selection@npm:1.4.1"
   checksum: 3/15eeba9663bd3f907da5eafa09dd462066ed7765212c193f9552a5190f3704bf240585fe0007476a107e948b0310a45dfe67b865607fe8b4255fde5f58043bd8
@@ -5120,6 +5129,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-drag@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "d3-drag@npm:1.2.5"
+  dependencies:
+    d3-dispatch: 1
+    d3-selection: 1
+  checksum: 3/a924f590fc5cea7bb0358fee70719d8c58db12e5a3cab4cd3c3848c60ad337ef89ff4248846d75b33422d47a9f122718ce54c5bdc504d5c141b689412dcf05a7
+  languageName: node
+  linkType: hard
+
 "d3-force@npm:^2.0.1":
   version: 2.0.1
   resolution: "d3-force@npm:2.0.1"
@@ -5138,7 +5157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-selection@npm:^1.4.1":
+"d3-selection@npm:1, d3-selection@npm:^1.4.1":
   version: 1.4.1
   resolution: "d3-selection@npm:1.4.1"
   checksum: 3/9073f9041f6261a78564002bee2f8828446dca7870124e9a3cbd6ad4ecb39dcda1599604a43c2e6b3685f3e7f548cacaa9470682c374706f19c449f1af2490a9
@@ -6221,6 +6240,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.7.0
     "@testing-library/react": ^10.0.4
     "@testing-library/user-event": ^10.2.3
+    "@types/d3-drag": ^1.2.3
     "@types/d3-force": ^1.2.1
     "@types/d3-selection": ^1.4.1
     "@types/jest": ^25.2.2
@@ -6229,6 +6249,7 @@ __metadata:
     "@types/react-dom": ^16.9.8
     "@types/react-router-dom": ^5.1.5
     "@yarnpkg/pnpify": ^2.0.0-rc.22
+    d3-drag: ^1.2.5
     d3-force: ^2.0.1
     d3-selection: ^1.4.1
     husky: ^4.2.5
