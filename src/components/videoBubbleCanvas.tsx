@@ -20,6 +20,7 @@ interface VideoBubbleCanvasProps {
 type Datum = SimulationNodeDatum & VideoEntity;
 
 const FONT_SIZE = 16;
+const VIDEO_CLOSEUP = 2;
 
 const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -40,7 +41,23 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
         "collision",
         forceCollide<Datum>().radius((d, i) => radiuses[i] + FONT_SIZE)
       );
-
+    // const masks = select(svgRef.current)
+    //   .selectAll("mask")
+    //   .data(videos as Datum[])
+    //   .join("mask")
+    //   .attr("id", ({ id }) => `mask-${date.getDate()}-${id}`);
+    // masks
+    //   .append("rect")
+    //   .attr("x", 0)
+    //   .attr("y", 0)
+    //   .attr("width", rootWidth)
+    //   .attr("height", rootHeight)
+    //   .attr("fill", "green");
+    // masks
+    //   .append("circle")
+    //   .attr("r", (d, i) => radiuses[i])
+    //   .attr("fill", "white")
+    // .attr("stroke", "green");
     const groups = select(svgRef.current)
       .selectAll<SVGGElement, Datum>("g")
       .data(videos as Datum[])
@@ -58,11 +75,19 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       .text(({ user }: VideoEntity) => user.nickname)
       .attr("text-anchor", "middle");
 
+    const rims = groups
+      .append("circle")
+      .attr("stroke-width", "5px")
+      .attr("stroke", "orange")
+      .attr("fill", "transparent")
+      .attr("r", (d, i) => radiuses[i]);
+
     const thumbnails = groups
       .append("foreignObject")
       .attr("fill", "black")
-      .attr("width", (d, i) => 2 * radiuses[i])
-      .attr("height", (d, i) => 2 * radiuses[i]);
+      .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
+      .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
+      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`);
 
     thumbnails
       .append("xhtml:video")
@@ -70,28 +95,50 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       .attr("autoplay", false)
       .attr("muted", true)
       .attr("loop", true)
+      .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`)
       .append("xhtml:source")
       .attr("src", ({ location }) => location);
 
     const tick = () => {
-      captions
-        .attr("x", ({ x }) => x || 0)
-        .attr("y", ({ y }, i) => 15 + radiuses[i] + (y || 0));
       thumbnails
         .attr("x", (d, i) => {
           const r = radiuses[i];
-          d.x = Math.max(r, Math.min(d.x || 0, rootWidth - r));
-          return (d.x || 0) - r;
+          const svg_padding = r + FONT_SIZE;
+          d.x = Math.max(
+            svg_padding,
+            Math.min(d.x || 0, rootWidth - svg_padding)
+          );
+          return (d.x || 0) - r * VIDEO_CLOSEUP;
         })
         .attr("y", (d, i) => {
           const r = radiuses[i];
-          d.y = Math.max(r, Math.min(d.y || 0, rootHeight - r));
-          return (d.y || 0) - r;
+          const svg_padding = r + FONT_SIZE;
+          d.y = Math.max(
+            svg_padding,
+            Math.min(d.y || 0, rootHeight - svg_padding)
+          );
+          return (d.y || 0) - r * VIDEO_CLOSEUP;
         })
-        .attr("clip-path", ({ clicks, x = 0, y = 0 }, i) => {
+        .attr("clip-path", ({ x = 0, y = 0 }, i) => {
           const r = radiuses[i];
-          return `circle(${r}px at ${-x + 2 * r}px ${-y + 2 * r}px )`;
+          return `circle(${r}px at ${2 * r * VIDEO_CLOSEUP - x}px ${
+            2 * r * VIDEO_CLOSEUP - y
+          }px )`;
         });
+      rims.attr("cx", ({ x = 0 }) => x).attr("cy", ({ y = 0 }) => y);
+      // masks
+      //   .select("circle")
+      //   .attr("cx", ({ x = 0 }, i) => {
+      //     const r = radiuses[i];
+      //     return x;
+      //   })
+      //   .attr("cy", ({ y = 0 }, i) => {
+      //     const r = radiuses[i];
+      //     return y;
+      //   });
+      captions
+        .attr("x", ({ x = 0 }) => x)
+        .attr("y", ({ y = 0 }, i) => radiuses[i] + y + FONT_SIZE);
     };
     simulation.on("tick", tick);
   }, []);
