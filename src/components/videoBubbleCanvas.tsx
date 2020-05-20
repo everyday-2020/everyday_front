@@ -77,10 +77,10 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
 
     const rims = groups
       .append("circle")
-      .attr("stroke-width", "5px")
-      .attr("stroke", "orange")
+      .attr("stroke-width", "4px")
+      .attr("stroke", "url(#gradient)")
       .attr("fill", "transparent")
-      .attr("r", (d, i) => radiuses[i]);
+      .attr("r", (d, i) => radiuses[i] + 1);
 
     const thumbnails = groups
       .append("foreignObject")
@@ -152,7 +152,14 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
         fontSize: `${FONT_SIZE}`,
       }}
       xmlns="http://www.w3.org/2000/svg"
-    ></svg>
+    >
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00bc9b" />
+          <stop offset="100%" stop-color="#5eaefd" />
+        </linearGradient>
+      </defs>
+    </svg>
   );
 };
 
