@@ -31,7 +31,8 @@ export const vids: VideoEntity[] = [
       username: "test",
       profilePic: "dog",
     },
-    location: "localhost",
+    location:
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/74/Landscape_of_rural_England.webm/Landscape_of_rural_England.webm.360p.vp9.webm",
   },
   {
     id: 3,
@@ -53,7 +54,7 @@ export const vids: VideoEntity[] = [
 
 export const vids2: VideoEntity[] = [
   {
-    id: 1,
+    id: 4,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 1,
@@ -69,7 +70,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 2,
+    id: 5,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 2,
@@ -85,7 +86,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 3,
+    id: 6,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 3,
@@ -101,7 +102,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 1,
+    id: 7,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 10,
@@ -117,7 +118,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 2,
+    id: 8,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 20,
@@ -133,7 +134,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 3,
+    id: 9,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 30,
@@ -149,7 +150,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 1,
+    id: 10,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 1,
@@ -165,7 +166,7 @@ export const vids2: VideoEntity[] = [
     location: "localhost",
   },
   {
-    id: 2,
+    id: 11,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 2,
@@ -178,10 +179,11 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profilePic: "dog",
     },
-    location: "localhost",
+    location:
+      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/ocean-small.webm",
   },
   {
-    id: 3,
+    id: 12,
     createdAt: new Date(2020, 3, 14),
     modifiedAt: new Date(2020, 3, 14),
     clicks: 3,
