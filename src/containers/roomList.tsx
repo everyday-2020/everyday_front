@@ -22,9 +22,9 @@ const RoomList: FC<RoomListProps> = ({
         <UserProfile user={user} />
       </div>
       <div className="rooms-list">
-        {rooms.map(
-          room => <RoomCard room={room}/>
-        )}
+        {rooms.map((room) => (
+          <RoomCard room={room} key={room.id} />
+        ))}
       </div>
     </div>
   );
