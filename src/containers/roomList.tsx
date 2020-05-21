@@ -3,8 +3,9 @@ import React, { FC } from "react";
 import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
 import "./roomList.scss";
-import UserProfile from "../components/userProfile";
+import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
+import RoomCard from "../components/roomCard";
 
 interface RoomListProps {
   rooms?: RoomEntity[];
@@ -21,8 +22,9 @@ const RoomList: FC<RoomListProps> = ({
         <UserProfile user={user} />
       </div>
       <div className="rooms-list">
-        <div className="rooms-entry"></div>
-        <div className="rooms-entry"></div>
+        {rooms.map(
+          room => <RoomCard room={room}/>
+        )}
       </div>
     </div>
   );

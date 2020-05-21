@@ -1,10 +1,10 @@
 @import "../App.scss";
 
-.profile-root {
+.usercard-root {
     display: flex;
     padding: 20px;
     background: linear-gradient(180deg, $blue 50%, #fff 50%);
-    .profile {
+    .usercard {
         font-size: 5rem;
         width: 8.25rem;
         height: 8.25rem;
@@ -15,17 +15,17 @@
         justify-content: center;
         align-items: center;
     }
-    .profile-name {
+    .usercard-name {
         padding: 20px;
         display: flex;
         flex-direction: column;
-        .profile-nickname {
+        .usercard-nickname {
             flex: 1;
             color: white;
             font-weight: bold;
             font-size: 2rem;
         }
-        .profile-username {
+        .usercard-username {
             flex: 1;
             font-size: 1.5rem;
         }
