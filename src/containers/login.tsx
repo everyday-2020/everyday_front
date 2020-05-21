@@ -16,6 +16,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "#005bea",
+    height: "100vh",
   },
   paper: {
     marginTop: theme.spacing(15),
@@ -23,9 +24,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+
   bg_rectangle: {
     display: "flex",
     height: "134px",
@@ -43,7 +42,6 @@ const tfStyles = makeStyles((theme) => ({
     borderRadius: 10,
   },
 }));
-
 const tf_theme = createMuiTheme({
   overrides: {
     MuiFilledInput: {
@@ -65,6 +63,16 @@ const tf_theme = createMuiTheme({
     },
   },
 });
+
+const buttonStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: "40px",
+  },
+  submit: {
+    backgroundColor: "#D3D3D3",
+    color: "#005bea",
+  },
+}));
 
 function PasswordTextField(props) {
   const classes = tfStyles();
@@ -109,6 +117,28 @@ function UsernameTextField(props) {
     />
   );
 }
+function SignInButton() {
+  const classes = buttonStyles();
+  return (
+    <div className={classes.container}>
+      <Link
+        href="./rooms"
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className={classes.submit}
+        >
+          Sign In
+        </Button>
+      </Link>
+    </div>
+  );
+}
 
 export default function SignIn() {
   const classes = useStyles();
@@ -124,33 +154,7 @@ export default function SignIn() {
       <div className={classes.paper}>
         <UsernameTextField></UsernameTextField>
         <PasswordTextField></PasswordTextField>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <Link href="./rooms">
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-        </Link>
-        <Grid container>
-          <Grid item xs>
-            <Link href="#" variant="body2">
-              Forgot password?
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
-          </Grid>
-        </Grid>
+        <SignInButton></SignInButton>
       </div>
     </Container>
   );
