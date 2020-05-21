@@ -163,8 +163,8 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
     >
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#2575fc" />
-          <stop offset="100%" stop-color="#2575fc" />
+          <stop offset="0%" stopColor="#2575fc" />
+          <stop offset="100%" stopColor="#2575fc" />
         </linearGradient>
       </defs>
     </svg>
