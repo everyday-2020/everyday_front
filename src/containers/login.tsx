@@ -12,7 +12,6 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import LogoBar from "../components/logobar";
 
 const useStyles = makeStyles((theme) => ({
