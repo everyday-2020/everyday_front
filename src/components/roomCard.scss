@@ -1,0 +1,19 @@
+@import "../App.scss";
+
+.rooms-card {
+  height: 88px;
+  display: flex;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  &.completed {
+    filter: brightness(30%);
+  }
+  font-size: 0.8125rem;
+  h3 {
+    margin: 0;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 1.375rem;
+  }
+}

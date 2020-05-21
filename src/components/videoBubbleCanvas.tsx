@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect } from "react";
+import React, { FC, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { select, event } from "d3-selection";
 import {
   forceSimulation,
@@ -15,6 +15,7 @@ import "./videoBubbleCanvas.css";
 interface VideoBubbleCanvasProps {
   date: Date;
   videos: VideoEntity[];
+  playVideo: Dispatch<SetStateAction<VideoEntity | undefined>>;
 }
 
 type Datum = SimulationNodeDatum & VideoEntity;
@@ -22,7 +23,11 @@ type Datum = SimulationNodeDatum & VideoEntity;
 const FONT_SIZE = 16;
 const VIDEO_CLOSEUP = 2;
 
-const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
+const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
+  videos,
+  date,
+  playVideo,
+}) => {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const { width: rootWidth = 0, height: rootHeight = 0 } =
@@ -87,12 +92,15 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       .attr("fill", "black")
       .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
       .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
-      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`);
+      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`)
+      .on("click", (d) => {
+        playVideo(d);
+      });
 
     thumbnails
       .append("xhtml:video")
       .attr("class", "bubble-thumbnail")
-      .attr("autoplay", false)
+      .attr("autoplay", true)
       .attr("muted", true)
       .attr("loop", true)
       .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`)
@@ -147,7 +155,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       ref={svgRef}
       style={{
         flex: 1,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#ffffff",
         minHeight: `${videos.length * 64}px`,
         fontSize: `${FONT_SIZE}`,
       }}
@@ -155,8 +163,8 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
     >
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#00bc9b" />
-          <stop offset="100%" stop-color="#5eaefd" />
+          <stop offset="0%" stop-color="#2575fc" />
+          <stop offset="100%" stop-color="#2575fc" />
         </linearGradient>
       </defs>
     </svg>

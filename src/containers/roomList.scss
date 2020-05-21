@@ -1,0 +1,30 @@
+@import "../App.scss";
+
+.rooms-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.rooms-header {
+  background-color: $blue;
+  height: 154px;
+  width: 100%;
+  flex: 0 0 154px;
+}
+.rooms-list {
+  padding: 20px 20px 0 20px;
+  .rooms-card {
+    &:nth-child(4n + 1) {
+      background-color: $light-green;
+    }
+    &:nth-child(4n + 2) {
+      background-color: $light-blue;
+    }
+    &:nth-child(4n + 3) {
+      background-color: $pink;
+    }
+    &:nth-child(4n + 4) {
+      background-color: $yellow;
+    }
+  }
+}
