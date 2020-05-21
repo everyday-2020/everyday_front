@@ -147,7 +147,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       ref={svgRef}
       style={{
         flex: 1,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#ffffff",
         minHeight: `${videos.length * 64}px`,
         fontSize: `${FONT_SIZE}`,
       }}
@@ -155,8 +155,8 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
     >
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#00bc9b" />
-          <stop offset="100%" stop-color="#5eaefd" />
+          <stop offset="0%" stop-color="#2575fc" />
+          <stop offset="100%" stop-color="#2575fc" />
         </linearGradient>
       </defs>
     </svg>
