@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Logo from "../assets/images/main_logo.png";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,14 +22,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -42,45 +35,95 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {},
   tf: {},
-  input: {
-    color: "black",
-    borderColor: "white",
+}));
+
+const tfStyles = makeStyles((theme) => ({
+  root: {
     backgroundColor: "white",
+    borderRadius: 10,
   },
 }));
 
+const tf_theme = createMuiTheme({
+  overrides: {
+    MuiFilledInput: {
+      root: {
+        backgroundColor: "white",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderRadius: 10,
+        "&$focused": {
+          backgroundColor: "transparent",
+          borderRadius: 10,
+        },
+        "&:hover": {
+          "@media (hover: none)": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
+  },
+});
+
+function PasswordTextField(props) {
+  const classes = tfStyles();
+
+  return (
+    <ThemeProvider theme={tf_theme}>
+      <TextField
+        className={classes.root}
+        variant="filled"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Password"
+        type="password"
+        id="password"
+        autoComplete="current-password"
+        InputProps={{
+          disableUnderline: true,
+        }}
+      />
+    </ThemeProvider>
+  );
+}
+function UsernameTextField(props) {
+  const classes = tfStyles();
+  return (
+    <TextField
+      className={classes.root}
+      variant="filled"
+      margin="normal"
+      required
+      fullWidth
+      id="email"
+      label="Email Address"
+      name="email"
+      autoComplete="email"
+      autoFocus
+      InputProps={{
+        disableUnderline: true,
+      }}
+    />
+  );
+}
+
 export default function SignIn() {
   const classes = useStyles();
+  const tf_classes = tfStyles();
 
   return (
     <Container component="main" className={classes.root}>
       <CssBaseline />
       <div className={classes.bg_rectangle}>
-        <img className={classes.logo} src={Logo}></img>
+        <img className={classes.logo} src={Logo} alt="logo"></img>
       </div>
+
       <div className={classes.paper}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
+        <UsernameTextField></UsernameTextField>
+        <PasswordTextField></PasswordTextField>
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
