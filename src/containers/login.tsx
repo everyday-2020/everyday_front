@@ -10,10 +10,14 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Logo from "../assets/images/main_logo.png";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    background: "#005bea",
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(15),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -29,18 +33,29 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  bg_rectangle: {
+    display: "flex",
+    height: "134px",
+    background: "#005bea",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {},
+  tf: {
+    color: "white",
+  },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" className={classes.root}>
       <CssBaseline />
+      <div className={classes.bg_rectangle}>
+        <img className={classes.logo} src={Logo}></img>
+      </div>
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
