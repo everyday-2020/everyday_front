@@ -10,8 +10,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Logo from "../assets/images/main_logo.png";
-import LogoBar from '../components/logobar'
+import LogoBar from "../components/logobar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +44,7 @@ export default function SignIn() {
   return (
     <Container component="main" className={classes.root}>
       <CssBaseline />
-      <LogoBar/>
+      <LogoBar />
       <div className={classes.paper}>
         <TextField
           variant="outlined"
