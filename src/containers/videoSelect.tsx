@@ -73,17 +73,21 @@ export default function VideoSelect() {
     }
   };
   return (
-    <div
-      style={{
-        marginTop: 20,
-        marginLeft: 20,
-        alignItems: "center",
-      }}
-    >
+    <div>
       <div>
-        <input type="file" onChange={onVideoChange} />
+        <input
+          type="file"
+          id="upload_file"
+          multiple
+          onChange={onVideoChange}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="upload_file">
+          <Button color="primary" component="span">
+            Upload
+          </Button>
+        </label>
       </div>
-
       {openDialog(videoURL)}
     </div>
   );
