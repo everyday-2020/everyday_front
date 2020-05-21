@@ -8,17 +8,8 @@ import {
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
 
-/*
-interface videoState {
-  videoURL: string,
-  thumbnailURL: string,
-}
-*/
-
 export default function VideoSelect() {
   const [videoURL, setVideo] = useState("");
-  //const [thumbnailURL, setThumbnail] = useState("");
-  //video thumbnail
   const onVideoChange = (e: any) => {
     e.preventDefault();
     setVideo(URL.createObjectURL(e.target.files[0]));
@@ -97,10 +88,3 @@ export default function VideoSelect() {
     </div>
   );
 }
-/*
-<div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Upload
-        </Button>
-      </div>
-*/

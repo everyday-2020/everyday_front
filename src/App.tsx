@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
-//import { VideoUpload } from "./containers/videoUpload";
 import VideoSelect from "./containers/videoSelect";
 
 function App() {
