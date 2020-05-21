@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
+import "./App.scss";
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
 
