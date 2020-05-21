@@ -148,15 +148,18 @@ export default function SignIn() {
   return (
     <Container component="main" className={classes.root}>
       <CssBaseline />
-      <div className={classes.bg_rectangle}>
-        <img className={classes.logo} src={Logo} alt="logo"></img>
-      </div>
-
-      <div className={classes.paper}>
-        <UsernameTextField></UsernameTextField>
-        <PasswordTextField></PasswordTextField>
-        <SignInButton></SignInButton>
-      </div>
+      <LogoBar style={{ height: "36px" }} />
+      <ThemeProvider
+        theme={createMuiTheme({
+          palette: { type: "dark", primary: { main: "#f9f9f9" } },
+        })}
+      >
+        <div className={classes.paper}>
+          <UsernameTextField></UsernameTextField>
+          <PasswordTextField></PasswordTextField>
+          <SignInButton></SignInButton>
+        </div>
+      </ThemeProvider>
     </Container>
   );
 }
