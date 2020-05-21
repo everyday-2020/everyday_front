@@ -6,6 +6,7 @@ import "./App.scss";
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
 import Room from "./containers/room";
+import MakeRoom from "./containers/makeRoom";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path="/room">
           <Room />
+        </Route>
+        <Route path="/makeroom">
+          <MakeRoom />
         </Route>
         <Route path="/">
           <Login />

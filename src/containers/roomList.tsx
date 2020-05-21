@@ -6,6 +6,8 @@ import "./roomList.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
 interface RoomListProps {
   rooms?: RoomEntity[];
@@ -26,6 +28,18 @@ const RoomList: FC<RoomListProps> = ({
           <RoomCard room={room} key={room.id} />
         ))}
       </div>
+      <BottomNavigation
+        style={{ position: "sticky", bottom: 0, backgroundColor: "#f0f0f0" }}
+        showLabels
+        onClick={() => {
+          window.location.href = "/makeroom";
+        }}
+      >
+        <BottomNavigationAction
+          label="New room"
+          icon={<AddBoxOutlinedIcon />}
+        />
+      </BottomNavigation>
     </div>
   );
 };

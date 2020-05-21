@@ -22,7 +22,7 @@ export const roomsMock: RoomEntity[] = [
     category: "🍽️",
   },
   {
-    id: 2,
+    id: 3,
     createdAt: new Date("2020-01-02"),
     modifiedAt: new Date("2020-01-02"),
     name: "탁구",
@@ -32,7 +32,7 @@ export const roomsMock: RoomEntity[] = [
     category: "🏓",
   },
   {
-    id: 2,
+    id: 4,
     createdAt: new Date("2020-01-02"),
     modifiedAt: new Date("2020-01-02"),
     name: "주사위",
