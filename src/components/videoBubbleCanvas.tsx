@@ -100,9 +100,10 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
     thumbnails
       .append("xhtml:video")
       .attr("class", "bubble-thumbnail")
-      .attr("autoplay", true)
-      .attr("muted", true)
-      .attr("loop", true)
+      .attr("autoplay", "")
+      .attr("muted", "")
+      .attr("loop", "")
+      .attr("oncanplay", "this.muted=true")
       .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`)
       .append("xhtml:source")
       .attr("src", ({ location }) => location);
