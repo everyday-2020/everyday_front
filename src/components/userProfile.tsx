@@ -14,7 +14,7 @@ const UserProfile: FC<UserProfileProps> = ({ user }) => {
       <div className="profile">{emoji.find(user.profilePic).emoji}</div>
       <div className="profile-name">
         <div className="profile-nickname">{user.nickname}</div>
-        <div className="profile-username">@{user.username}</div>
+        <div className="profile-username">{user.username}</div>
       </div>
     </div>
   );

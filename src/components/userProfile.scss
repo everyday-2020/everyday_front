@@ -17,12 +17,16 @@
     }
     .profile-name {
         padding: 20px;
+        display: flex;
+        flex-direction: column;
         .profile-nickname {
+            flex: 1;
             color: white;
             font-weight: bold;
             font-size: 2rem;
         }
         .profile-username {
+            flex: 1;
             font-size: 1.5rem;
         }
     }
