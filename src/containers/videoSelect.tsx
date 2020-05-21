@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  BottomNavigationAction,
   Button,
   Dialog,
   DialogActions,
@@ -7,6 +8,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
+import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
 export default function VideoSelect() {
   const [videoURL, setVideo] = useState("");
@@ -45,7 +47,7 @@ export default function VideoSelect() {
                 아니오
               </Button>
               <Button
-                onClick={() => (window.location.href = "/rooms")}
+                onClick={() => (window.location.href = "/room")}
                 color="primary"
                 autoFocus
               >
@@ -82,12 +84,15 @@ export default function VideoSelect() {
           onChange={onVideoChange}
           style={{ display: "none" }}
         />
-        <label htmlFor="upload_file">
-          <Button color="primary" component="span">
-            Upload
-          </Button>
-        </label>
       </div>
+      <label htmlFor="upload_file">
+        <BottomNavigationAction
+          component="span"
+          label="Upload"
+          showLabel
+          icon={<AddBoxOutlinedIcon />}
+        />
+      </label>
       {openDialog(videoURL)}
     </div>
   );

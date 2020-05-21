@@ -1,10 +1,12 @@
 import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
+//import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+//import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
 import DateBoard from "../components/dateboard";
 import { vids2, vids } from "../mocks/video";
+
+import VideoSelect from "./videoSelect";
 
 const Room: React.FC = () => {
   return (
@@ -20,7 +22,7 @@ const Room: React.FC = () => {
         style={{ position: "sticky", bottom: 0, backgroundColor: "#f0f0f0" }}
         showLabels
       >
-        <BottomNavigationAction label="Upload" icon={<AddBoxOutlinedIcon />} />
+        <VideoSelect />
       </BottomNavigation>
     </>
   );
