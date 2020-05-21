@@ -17,36 +17,30 @@ import LogoBar from "../components/logobar";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "#005bea",
-    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "space-evenly",
   },
   paper: {
-    marginTop: theme.spacing(7),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-
-  bg_rectangle: {
-    display: "flex",
-    height: "134px",
-    background: "#005bea",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {},
-  tf: {},
 }));
 
 const tfStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "white",
     borderRadius: 10,
+    justifyContent: "center",
   },
 }));
 const tf_theme = createMuiTheme({
   overrides: {
     MuiFilledInput: {
       root: {
+        color: "gray",
         backgroundColor: "white",
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
@@ -101,21 +95,23 @@ function PasswordTextField(props) {
 function UsernameTextField(props) {
   const classes = tfStyles();
   return (
-    <TextField
-      className={classes.root}
-      variant="filled"
-      margin="normal"
-      required
-      fullWidth
-      id="email"
-      label="Email Address"
-      name="email"
-      autoComplete="email"
-      autoFocus
-      InputProps={{
-        disableUnderline: true,
-      }}
-    />
+    <ThemeProvider theme={tf_theme}>
+      <TextField
+        className={classes.root}
+        variant="filled"
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Email Address"
+        name="email"
+        autoComplete="email"
+        autoFocus
+        InputProps={{
+          disableUnderline: true,
+        }}
+      />
+    </ThemeProvider>
   );
 }
 function SignInButton() {
