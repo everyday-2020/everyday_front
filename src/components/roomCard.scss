@@ -1,10 +1,14 @@
-@import '../App.scss';
+@import "../App.scss";
 
 .rooms-card {
-    background-color: $light-green;
-    flex: 1 0 121px;
-    width: 100%;
-    margin: 6px 0;
-    align-self: center;
-    border-radius: 10px;
+  flex: 0 0 80px;
+  margin-bottom: 12px;
+  align-self: center;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  &.completed {
+    filter: brightness(30%);
+  }
 }

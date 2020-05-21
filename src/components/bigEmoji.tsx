@@ -1,32 +1,17 @@
-import React, { FC } from "react";
+import React, { FC, CSSProperties } from "react";
 import { find } from "node-emoji";
 
 import "./userCard.scss";
-import './bigEmoji.scss'
+import "./bigEmoji.scss";
 
 interface BigEmojiProps {
   emoji: string;
-  fontSize?: string;
-  width?: string;
-  backgroundColor?: string;
+  style?: CSSProperties;
 }
 
-const BigEmoji: FC<BigEmojiProps> = ({
-  emoji,
-  fontSize,
-  width,
-  backgroundColor,
-}) => {
+const BigEmoji: FC<BigEmojiProps> = ({ emoji, style }) => {
   return (
-    <div
-      className="bigemoji"
-      style={{
-        fontSize,
-        width,
-        height: width,
-        backgroundColor,
-      }}
-    >
+    <div className="bigemoji" style={style}>
       {find(emoji)?.emoji}
     </div>
   );
