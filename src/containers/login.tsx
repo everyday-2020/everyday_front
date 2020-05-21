@@ -41,8 +41,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   logo: {},
-  tf: {
-    color: "white",
+  tf: {},
+  input: {
+    color: "black",
+    borderColor: "white",
+    backgroundColor: "white",
   },
 }));
 
@@ -58,7 +61,11 @@ export default function SignIn() {
       <div className={classes.paper}>
         <form className={classes.form} noValidate>
           <TextField
-            variant="outlined"
+            className={classes.tf}
+            InputProps={{
+              className: classes.input,
+            }}
+            variant="filled"
             margin="normal"
             required
             fullWidth
@@ -69,7 +76,11 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
-            variant="outlined"
+            className={classes.tf}
+            InputProps={{
+              className: classes.input,
+            }}
+            variant="filled"
             margin="normal"
             required
             fullWidth
