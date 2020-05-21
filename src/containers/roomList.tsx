@@ -4,6 +4,7 @@ import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
 import "./roomList.scss";
 import UserProfile from "../components/userProfile";
+import LogoBar from "../components/logobar";
 
 interface RoomListProps {
   rooms?: RoomEntity[];
@@ -15,8 +16,9 @@ const RoomList: FC<RoomListProps> = ({
 }) => {
   return (
     <div className="rooms-root">
+      <LogoBar></LogoBar>
       <div className="rooms-header">
-        <UserProfile user={user}/>
+        <UserProfile user={user} />
       </div>
       <div className="rooms-list">
         <div className="rooms-entry"></div>

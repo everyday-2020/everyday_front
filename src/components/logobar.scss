@@ -1,0 +1,9 @@
+@import '../App.scss';
+
+.logobar {
+  display: flex;
+  height: 56px;
+  background: $blue;
+  align-items: center;
+  justify-content: center;
+}

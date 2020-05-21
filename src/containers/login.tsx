@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Logo from "../assets/images/main_logo.png";
+import LogoBar from '../components/logobar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,14 +34,6 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  bg_rectangle: {
-    display: "flex",
-    height: "134px",
-    background: "#005bea",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: {},
   tf: {
     color: "white",
   },
@@ -52,9 +45,7 @@ export default function SignIn() {
   return (
     <Container component="main" className={classes.root}>
       <CssBaseline />
-      <div className={classes.bg_rectangle}>
-        <img className={classes.logo} src={Logo}></img>
-      </div>
+      <LogoBar/>
       <div className={classes.paper}>
         <TextField
           variant="outlined"
