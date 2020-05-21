@@ -31,27 +31,42 @@ export default function VideoSelect() {
       return (
         <div>
           <Dialog open={open} onClose={handleClose} maxWidth={"xs"}>
-            <DialogTitle id="alert-dialog-title">
+            <DialogTitle
+              id="alert-dialog-title"
+              style={{ textAlign: "center" }}
+            >
               {"이 비디오를 업로드 할까요?"}
             </DialogTitle>
             <DialogContent
               style={{
                 width: 250,
                 height: 250,
+                overflow: "hidden",
               }}
             >
               <VideoThumbnail videoUrl={videoURL} width={250} height={250} />
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="secondary">
-                아니오
-              </Button>
+            <DialogActions style={{ justifyContent: "center" }}>
               <Button
                 onClick={() => (window.location.href = "/room")}
-                color="primary"
+                variant="outlined"
+                style={{
+                  backgroundColor: "#2575fc",
+                  color: "#ffffff",
+                }}
                 autoFocus
               >
                 네
+              </Button>
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                style={{
+                  borderColor: "#2575fc",
+                  color: "#2575fc",
+                }}
+              >
+                아니오
               </Button>
             </DialogActions>
           </Dialog>
