@@ -1,0 +1,29 @@
+@import "../App.scss";
+
+.profile-root {
+    display: flex;
+    padding: 20px;
+    background: linear-gradient(180deg, $blue 50%, #fff 50%);
+    .profile {
+        font-size: 5rem;
+        width: 8.25rem;
+        height: 8.25rem;
+        align-content: center;
+        background-color: $gray;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .profile-name {
+        padding: 20px;
+        .profile-nickname {
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .profile-username {
+            font-size: 1.5rem;
+        }
+    }
+}
