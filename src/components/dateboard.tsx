@@ -18,6 +18,9 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
         display: "flex",
         flexDirection: "column",
         paddingTop: "10px",
+        backgroundColor: "#ffffff",
+        color: "#98979c",
+        borderTop: "1px solid #6f6e75",
       }}
     >
       <span style={{ margin: "0 auto" }}>{date.toLocaleDateString()}</span>

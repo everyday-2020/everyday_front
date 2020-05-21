@@ -6,6 +6,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import DateBoard from "../components/dateboard";
 import { vids2, vids } from "../mocks/video";
 
+import LogoBar from "../components/logobar";
 import VideoSelect from "./videoSelect";
 
 const Room: React.FC = () => {
@@ -15,8 +16,9 @@ const Room: React.FC = () => {
         className="content"
         style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}
       >
-        <DateBoard date={new Date(1995, 11, 14)} videos={vids} />
-        <DateBoard date={new Date(1995, 11, 13)} videos={vids2} />
+        <LogoBar />
+        <DateBoard date={new Date(2020, 4, 21)} videos={vids} />
+        <DateBoard date={new Date(2020, 4, 22)} videos={vids2} />
       </div>
       <BottomNavigation
         style={{ position: "sticky", bottom: 0, backgroundColor: "#f0f0f0" }}
