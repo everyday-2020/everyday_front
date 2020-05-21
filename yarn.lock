@@ -1682,6 +1682,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material-ui/icons@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@material-ui/icons@npm:4.9.1"
+  dependencies:
+    "@babel/runtime": ^7.4.4
+  peerDependencies:
+    "@material-ui/core": ^4.0.0
+    "@types/react": ^16.8.6
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 3/110bb77f0758d16ad85b6a91f23fe05bac6790b30b6b1889b0578d7d42050c63c76e2764ec4991bdf342073de43e14ebfc171f1c63296a6dd8d523cc6c07d2bb
+  languageName: node
+  linkType: hard
+
 "@material-ui/styles@npm:^4.9.14":
   version: 4.9.14
   resolution: "@material-ui/styles@npm:4.9.14"
@@ -2058,6 +2075,29 @@ __metadata:
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
   checksum: 3/8311db94a9c4ecd247763b81e783ee49d87678b4ce6a7ee502e2bd5cea242b7357804a04855db009f713174bc654cc0c01c7303d40d757e5d710f5ac0368500f
+  languageName: node
+  linkType: hard
+
+"@types/d3-drag@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@types/d3-drag@npm:1.2.3"
+  dependencies:
+    "@types/d3-selection": "*"
+  checksum: 3/e913006cac1cc7d15a619dfa050d1b6f581b222ccde1e06bd0d0490dbf504fdc58aeff3aa27aeb84b87a160a0a8dd3c39ff482eff2d7110cf9fcf84b188574e3
+  languageName: node
+  linkType: hard
+
+"@types/d3-force@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@types/d3-force@npm:1.2.1"
+  checksum: 3/1d9e033642f3c4c64aa0206b4fde9855874f438a028745694fe91c1907bbca75a3a5608392d4cf2d155c77d06de61c22b6ec2e8db9b924c5115979044c8181cd
+  languageName: node
+  linkType: hard
+
+"@types/d3-selection@npm:*, @types/d3-selection@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@types/d3-selection@npm:1.4.1"
+  checksum: 3/15eeba9663bd3f907da5eafa09dd462066ed7765212c193f9552a5190f3704bf240585fe0007476a107e948b0310a45dfe67b865607fe8b4255fde5f58043bd8
   languageName: node
   linkType: hard
 
@@ -5082,6 +5122,55 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-dispatch@npm:1":
+  version: 1.0.6
+  resolution: "d3-dispatch@npm:1.0.6"
+  checksum: 3/2bec4b1395b167974d8fc6b2d5b2a843efd90c377e1749202cf2241557a0bfc7e5eaa465de0f39b5d977d2ae60c5ac982d2f043482bbfb49df53028b53769c98
+  languageName: node
+  linkType: hard
+
+"d3-drag@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "d3-drag@npm:1.2.5"
+  dependencies:
+    d3-dispatch: 1
+    d3-selection: 1
+  checksum: 3/a924f590fc5cea7bb0358fee70719d8c58db12e5a3cab4cd3c3848c60ad337ef89ff4248846d75b33422d47a9f122718ce54c5bdc504d5c141b689412dcf05a7
+  languageName: node
+  linkType: hard
+
+"d3-force@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "d3-force@npm:2.0.1"
+  dependencies:
+    d3-dispatch: 1
+    d3-quadtree: 1
+    d3-timer: 1
+  checksum: 3/cb0e08546d79463d66ed90c734e80c6ae93bf6fc05b83c38232f478ef36195efd13e02e1b77619837cb16a3de724349a2bbda3b619fd4e757aa3f81a69a43e93
+  languageName: node
+  linkType: hard
+
+"d3-quadtree@npm:1":
+  version: 1.0.7
+  resolution: "d3-quadtree@npm:1.0.7"
+  checksum: 3/ec3d02c75d75ac587ef7e00bfb55bfe0313aa84960f01a3d39f19d28277acae158c5b13bddd6612c82071981639fd08d07b51521cb669d9a44a51a0232827a19
+  languageName: node
+  linkType: hard
+
+"d3-selection@npm:1, d3-selection@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "d3-selection@npm:1.4.1"
+  checksum: 3/9073f9041f6261a78564002bee2f8828446dca7870124e9a3cbd6ad4ecb39dcda1599604a43c2e6b3685f3e7f548cacaa9470682c374706f19c449f1af2490a9
+  languageName: node
+  linkType: hard
+
+"d3-timer@npm:1":
+  version: 1.0.10
+  resolution: "d3-timer@npm:1.0.10"
+  checksum: 3/e302132e1fc8989a5693fc7d265a034d7634ec87a1a8ed85e5959715d9da413971d9289f0ef304c67397d2acb4ebebd99f5adf0c8819929b8f6c588a1fd01d36
+  languageName: node
+  linkType: hard
+
 "d@npm:1, d@npm:^1.0.1":
   version: 1.0.1
   resolution: "d@npm:1.0.1"
@@ -6147,15 +6236,22 @@ __metadata:
   resolution: "everyday_front@workspace:."
   dependencies:
     "@material-ui/core": ^4.9.14
+    "@material-ui/icons": ^4.9.1
     "@testing-library/jest-dom": ^5.7.0
     "@testing-library/react": ^10.0.4
     "@testing-library/user-event": ^10.2.3
+    "@types/d3-drag": ^1.2.3
+    "@types/d3-force": ^1.2.1
+    "@types/d3-selection": ^1.4.1
     "@types/jest": ^25.2.2
     "@types/node": ^14.0.1
     "@types/react": ^16.9.35
     "@types/react-dom": ^16.9.8
     "@types/react-router-dom": ^5.1.5
     "@yarnpkg/pnpify": ^2.0.0-rc.22
+    d3-drag: ^1.2.5
+    d3-force: ^2.0.1
+    d3-selection: ^1.4.1
     husky: ^4.2.5
     node-sass: ^4.14.1
     prettier: ^2.0.5
@@ -6164,6 +6260,7 @@ __metadata:
     react-dom: ^16.13.1
     react-router-dom: ^5.2.0
     react-scripts: 3.4.1
+    react-video-thumbnail: ^0.1.3
     typescript: ^3.9.2
   languageName: unknown
   linkType: soft
@@ -12910,6 +13007,13 @@ fsevents@^1.2.7:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 3/e14446123f820e804335c64be5270333c29e8cfaa43dfc33387e132c5d521cf4a0a7c2408058a147b254ae82a6569f373394d83e977ef340d6937bc2f4ff7d6c
+  languageName: node
+  linkType: hard
+
+"react-video-thumbnail@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "react-video-thumbnail@npm:0.1.3"
+  checksum: 3/862950f1e4e294e0247f31a637ee6faa9e496d361c853cc1d87e7172c010fc97afe130f496436b77d04fb560ce9ea179f610e69c47978fc5ca0b4234ce4158da
   languageName: node
   linkType: hard
 

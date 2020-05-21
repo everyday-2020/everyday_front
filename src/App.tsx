@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import "./App.scss";
 import Login from "./containers/login";
 import RoomList from "./containers/roomList";
+import Room from "./containers/room";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         </Route>
         <Route path="/rooms">
           <RoomList />
+        </Route>
+        <Route path="/room">
+          <Room></Room>
         </Route>
         <Route path="/">
           <div
@@ -31,6 +35,9 @@ function App() {
               </Link>
               <Link to="/rooms">
                 <Button>room list</Button>
+              </Link>
+              <Link to="/room">
+                <Button>room</Button>
               </Link>
             </div>
           </div>
