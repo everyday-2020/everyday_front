@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect } from "react";
+import React, { FC, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { select, event } from "d3-selection";
 import {
   forceSimulation,
@@ -15,6 +15,7 @@ import "./videoBubbleCanvas.css";
 interface VideoBubbleCanvasProps {
   date: Date;
   videos: VideoEntity[];
+  playVideo: Dispatch<SetStateAction<VideoEntity | undefined>>;
 }
 
 type Datum = SimulationNodeDatum & VideoEntity;
@@ -22,7 +23,11 @@ type Datum = SimulationNodeDatum & VideoEntity;
 const FONT_SIZE = 16;
 const VIDEO_CLOSEUP = 2;
 
-const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
+const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
+  videos,
+  date,
+  playVideo,
+}) => {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const { width: rootWidth = 0, height: rootHeight = 0 } =
@@ -87,12 +92,15 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({ videos, date }) => {
       .attr("fill", "black")
       .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
       .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
-      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`);
+      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`)
+      .on("click", (d) => {
+        playVideo(d);
+      });
 
     thumbnails
       .append("xhtml:video")
       .attr("class", "bubble-thumbnail")
-      .attr("autoplay", false)
+      .attr("autoplay", true)
       .attr("muted", true)
       .attr("loop", true)
       .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`)
