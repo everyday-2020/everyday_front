@@ -18,9 +18,13 @@ const RoomCard: FC<RoomCardProps> = ({ room }) => {
         history.push("/room");
       }}
     >
-      {room.name}
-      <br />
-      {room.description}
+      <div>
+        <h3>{room.name}</h3>
+
+        {room.description}
+        <br />
+        {room.completeAt.toLocaleDateString()}
+      </div>
       <BigEmoji
         emoji={room.category}
         style={{
@@ -29,6 +33,7 @@ const RoomCard: FC<RoomCardProps> = ({ room }) => {
           width: "4rem",
           height: "4rem",
           marginLeft: "auto",
+          alignSelf: "center",
         }}
       />
     </div>
