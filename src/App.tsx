@@ -11,36 +11,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
         <Route path="/rooms">
           <RoomList />
         </Route>
         <Route path="/room">
-          <Room></Room>
+          <Room />
         </Route>
         <Route path="/">
-          <div
-            style={{
-              display: "flex",
-              height: "100vh",
-              width: "100%",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ margin: "auto" }}>
-              <Link to="/login">
-                <Button>login</Button>
-              </Link>
-              <Link to="/rooms">
-                <Button>room list</Button>
-              </Link>
-              <Link to="/room">
-                <Button>room</Button>
-              </Link>
-            </div>
-          </div>
+          <Login />
         </Route>
       </Switch>
     </Router>
