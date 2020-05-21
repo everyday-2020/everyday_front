@@ -9,7 +9,7 @@ export const roomsMock: RoomEntity[] = [
     description: "",
     completeAt: new Date("2020-06-07"),
     inviteCode: "abcde",
-    category: "tree",
+    category: "deciduous_tree",
   },
 ];
 export const userMock: UserEntity = {

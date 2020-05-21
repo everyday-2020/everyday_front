@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import emoji from "node-emoji";
 
 import { UserEntity } from "../types/entities";
 import "./userCard.scss";
+import BigEmoji from "./bigEmoji";
 
 interface UsercardProps {
   user: UserEntity;
@@ -10,11 +10,11 @@ interface UsercardProps {
 
 const UserCard: FC<UsercardProps> = ({ user }) => {
   return (
-    <div className="card-root">
-      <div className="card">{emoji.find(user.profilePic).emoji}</div>
-      <div className="card-name">
-        <div className="card-nickname">{user.nickname}</div>
-        <div className="card-username">{user.username}</div>
+    <div className="usercard-root">
+      <BigEmoji emoji={user.profilePic}/>
+      <div className="usercard-name">
+        <div className="usercard-nickname">{user.nickname}</div>
+        <div className="usercard-username">{user.username}</div>
       </div>
     </div>
   );

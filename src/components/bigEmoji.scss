@@ -1,0 +1,14 @@
+@import '../App.scss';
+
+.bigemoji {
+    font-size: 5rem;
+    width: 8.25rem;
+    height: 8.25rem;
+    align-content: center;
+    background-color: $gray;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: -5px 5px 5px #777777cc;
+}
