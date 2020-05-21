@@ -18,12 +18,12 @@ const Room: React.FC = () => {
       >
         <LogoBar />
         <DateBoard
-          date={new Date(2020, 4, 21)}
+          date={new Date(2020, 4, 22)}
           videos={vids}
           playVideo={playVideo}
         />
         <DateBoard
-          date={new Date(2020, 4, 22)}
+          date={new Date(2020, 4, 21)}
           videos={vids2}
           playVideo={playVideo}
         />
