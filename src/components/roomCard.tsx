@@ -9,21 +9,21 @@ interface RoomCardProps {
   room: RoomEntity;
 }
 const RoomCard: FC<RoomCardProps> = ({ room }) => {
-  const isCompleted = room.completeAt < new Date();
+  const isCompleted = new Date(room.complete_at) < new Date();
   const history = useHistory();
   return (
     <div
       className={`rooms-card ${isCompleted && "completed"}`}
       onClick={() => {
-        history.push("/room");
+        history.push(`/room/${room.invite_code}`);
       }}
     >
       <div>
-        <h3>{room.name}</h3>
+        <h3>{room.title}</h3>
 
         {room.description}
         <br />
-        {room.completeAt.toLocaleDateString()}
+        {new Date(room.complete_at).toLocaleDateString()}
       </div>
       <BigEmoji
         emoji={room.category}
