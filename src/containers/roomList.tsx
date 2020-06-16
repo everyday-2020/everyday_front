@@ -9,8 +9,6 @@ import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import { getUser } from "../api";
 
-const url = "http://localhost:3000/user";
-
 interface RoomListProps {
   rooms?: RoomEntity[];
   user?: UserEntity;

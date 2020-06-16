@@ -1,10 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { TextField, Avatar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from 'axios';
+import { signup } from "../api";
 
-
-var url = 'http://localhost:3000/users'
+interface SignUpForm {
+    username: string;
+    nickname: string;
+    password: string;
+    profile_pic: string;
+  }
 
 const profileStyles = makeStyles((theme) => ({
     root : {
@@ -34,7 +38,7 @@ type SignFromProps = {
 export default function SignUp() {
     const classes = profileStyles();
 
-    const [signUpForm, setForm] = useState({
+    const [signUpForm, setForm] = useState<SignUpForm>({
         username: '',
         nickname: '',
         password: '',
@@ -58,24 +62,13 @@ export default function SignUp() {
     
     const confirmSignUp = (e:any) => {
         e.preventDefault();
-        console.log("confirmSignUp");
-        console.log("signupForm", signUpForm);
-        console.log("username", username);
-        console.log("password", password);
-        const request = axios.post(url, {
-            user: signUpForm
-
-        }, { withCredentials: true })
-        .then( response => {
-            alert("Sign Up Success");
-            console.log(response);
-            window.location.href = "/";
-        })
-        .catch( error => {
-            console.log(error);
-            alert("Failed");
-        });
+        //console.log("confirmSignUp");
+        //console.log("signupForm", signUpForm);
+        //console.log("username", username);
+        //console.log("password", password);
         
+        signup(signUpForm);
+
         setForm({
             username: '',
             nickname: '',

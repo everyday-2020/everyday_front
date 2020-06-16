@@ -10,6 +10,13 @@ interface SignInForm {
   password: string;
 }
 
+interface SignUpForm {
+  username: string;
+  nickname: string;
+  password: string;
+  profile_pic: string;
+}
+
 export function login(signInForm: SignInForm) {
   axios
     .post(
@@ -38,6 +45,26 @@ export async function getUser() {
     });
     return response.data;
   } catch (e) {
-    window.location.href="/signin";
+    window.location.href = "/signin";
   }
+}
+
+export function signup(signUpForm: SignUpForm) {
+  axios
+    .post(
+      usersUrl,
+      {
+        user: signUpForm,
+      },
+      { withCredentials: true }
+    )
+    .then((response) => {
+      alert("Sign Up Success");
+      console.log(response);
+      window.location.href = "/";
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Failed");
+    });
 }
