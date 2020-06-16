@@ -7,9 +7,9 @@ import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import axios from "axios";
+import { getUser } from "../api";
 
-const url = "http://localhost:3000/user"
+const url = "http://localhost:3000/user";
 
 interface RoomListProps {
   rooms?: RoomEntity[];
@@ -20,19 +20,10 @@ const RoomList: FC<RoomListProps> = ({
   user = userMock,
 }) => {
   useEffect(() => {
-    const request = axios.get(url, {
-      withCredentials: true
-    })
-    .then( response => {
-      console.log(response);
-    }
-    )
-    .catch( error => {
-      console.log(error);
-      //alert("Login please");
-      window.location.href="/signin";
-    })
-  })
+    (async () => {
+      const userInfo = await getUser();
+    })();
+  });
   return (
     <div className="rooms-root">
       <LogoBar></LogoBar>

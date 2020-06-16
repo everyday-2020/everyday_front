@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
-import { login } from "../api/login";
+import { login } from "../api";
 //import FormControlLabel from "@material-ui/core/FormControlLabel";
 //import Checkbox from "@material-ui/core/Checkbox";
 //import Link from "@material-ui/core/Link";
