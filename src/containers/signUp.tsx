@@ -75,14 +75,14 @@ export default function SignUp() {
             console.log(error);
             alert("Failed");
         });
-        /*
+        
         setForm({
             username: '',
             nickname: '',
             password: '',
             profile_pic: process.env.PUBLIC_URL + '/tmp_profile_pic.png'
         })
-        */
+        
     }
 
     const changeForm = (e:any) => {
@@ -113,11 +113,6 @@ export default function SignUp() {
                 </div>
                 <Button type="submit" variant="outlined" className={classes.button}>Sign Up</Button>
             </form>
-            <div>
-                {username}
-                {nickname}
-                {password}
-            </div>
         </div>
     );
 }

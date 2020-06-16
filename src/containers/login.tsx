@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import axios from "axios";
+//import FormControlLabel from "@material-ui/core/FormControlLabel";
+//import Checkbox from "@material-ui/core/Checkbox";
+//import Link from "@material-ui/core/Link";
+//import Grid from "@material-ui/core/Grid";
 import {
   makeStyles,
   createMuiTheme,
@@ -13,6 +14,8 @@ import {
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import LogoBar from "../components/logobar";
+
+const url = "http://localhost:3000/login";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,103 +69,50 @@ const buttonStyles = makeStyles((theme) => ({
   submit: {
     backgroundColor: "#D3D3D3",
     color: "#005bea",
+    marginBottom: "10px",
   },
 }));
 
-function PasswordTextField(props) {
-  const classes = tfStyles();
-
-  return (
-    <ThemeProvider theme={tf_theme}>
-      <TextField
-        className={classes.root}
-        variant="filled"
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="Password"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-        InputProps={{
-          disableUnderline: true,
-        }}
-      />
-    </ThemeProvider>
-  );
-}
-function UsernameTextField(props) {
-  const classes = tfStyles();
-  return (
-    <ThemeProvider theme={tf_theme}>
-      <TextField
-        className={classes.root}
-        variant="filled"
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        label="Email Address"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        InputProps={{
-          disableUnderline: true,
-        }}
-      />
-    </ThemeProvider>
-  );
-}
-function SignInButton() {
-  const classes = buttonStyles();
-  return (
-    <div className={classes.container}>
-      <Link
-        href="./rooms"
-        style={{
-          textDecoration: "none",
-        }}
-      >
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.submit}
-        >
-          Sign In
-        </Button>
-      </Link>
-    </div>
-  );
-}
-
-function SignUpButton() {
-  const classes = buttonStyles();
-  return (
-    <div className={classes.container}>
-      <Link
-        href="./signup"
-        style={{
-          textDecoration: "none",
-        }}
-      >
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.submit}
-        >
-          Sign Up
-        </Button>
-      </Link>
-    </div>
-  )
-}
-
 export default function SignIn() {
   const classes = useStyles();
+  const button_classes = buttonStyles();
   const tf_classes = tfStyles();
+
+  const [ signInForm, setForm ] = useState({
+    username: '',
+    password: ''
+  });
+
+  const { username, password } = signInForm;
+
+  const signUpPage = (e:any) => {
+    e.preventDefault();
+    window.location.href="/signup";
+  }
+
+  const confirmSignIn = (e:any) => {
+    e.preventDefault();
+    const request = axios.post(url, {
+      user: signInForm
+    })
+    .then( response => {
+      console.log( response );
+      alert("Login Success");
+      window.location.href="/rooms";
+    })
+    .catch( error => {
+      console.log(error);
+      alert("Login Failed");
+    })
+  }
+
+  const changeForm = (e:any) => {
+    setForm({
+      ...signInForm,
+      [e.target.id]: e.target.value
+    })
+    console.log("signInForm", signInForm);
+  }
 
   return (
     <Container component="main" className={classes.root}>
@@ -174,10 +124,60 @@ export default function SignIn() {
         })}
       >
         <div className={classes.paper}>
-          <UsernameTextField></UsernameTextField>
-          <PasswordTextField></PasswordTextField>
-          <SignInButton></SignInButton>
-          <SignUpButton></SignUpButton>
+          <form onSubmit={confirmSignIn}>
+            <ThemeProvider theme={tf_theme}>
+              <TextField
+                onChange={changeForm}
+                className={tf_classes.root}
+                variant="filled"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+              <TextField
+                onChange={changeForm}
+                className={tf_classes.root}
+                variant="filled"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
+            <div className={button_classes.container}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={button_classes.submit}
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={signUpPage}
+              fullWidth
+              variant="contained"
+              className={button_classes.submit}
+            >
+              Sign Up
+            </Button>
+            </div>
+          </form>
         </div>
       </ThemeProvider>
     </Container>
