@@ -4,6 +4,7 @@ const apiUrl = "http://localhost:3000";
 const loginUrl = `${apiUrl}/login`;
 const usersUrl = `${apiUrl}/users`;
 const userUrl = `${apiUrl}/user`;
+const roomUrl = `${apiUrl}/rooms`;
 
 interface SignInForm {
   username: string;
@@ -15,6 +16,13 @@ interface SignUpForm {
   nickname: string;
   password: string;
   profile_pic: string;
+}
+
+interface MakeRoomForm {
+  title: string;
+  description: string;
+  complete_at: string;
+  category: string;
 }
 
 export function login(signInForm: SignInForm) {
@@ -67,4 +75,21 @@ export function signup(signUpForm: SignUpForm) {
       console.log(error);
       alert("Failed");
     });
+}
+
+export function makeRoom(makeRoomForm: MakeRoomForm) {
+  axios.post(
+    roomUrl,
+    {
+      room: makeRoomForm,
+    },
+    { withCredentials: true }
+  )
+  .then((response) => {
+    alert("New Room is created");
+    window.location.href = "/";
+  })
+  .catch((error) => {
+    alert("Failed");
+  })
 }

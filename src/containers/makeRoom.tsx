@@ -1,12 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 import LogoBar from "../components/logobar";
 import { TextField, Slider, Typography, Button } from "@material-ui/core";
+import { makeRoom } from "../api";
 
-function valueDuration(value) {
-  return "${value}일";
+interface MakeRoomForm {
+  title: string;
+  description: string;
+  complete_at: string;
+  category: string;
 }
 
+const marks = [
+  {
+    value: 1,
+    label: '1',
+  },
+  {
+    value: 10,
+    label: '10',
+  },
+  {
+    value: 20,
+    label: '20',
+  },
+  {
+    value: 30,
+    label: '30',
+  }
+]
+
 const MakeRoom: React.FC = () => {
+  const [makeRoomForm, setForm] = useState<MakeRoomForm>({
+    title: '',
+    description: '',
+    complete_at: '',
+    category: 'fitness'
+  });
+  
+  function valueDuration(value) {
+    return `${value}`;
+  }
+  
+  const confirmRoom = (e:any) => {
+    e.preventDefault();
+
+    makeRoom(makeRoomForm);
+
+    setForm({
+      title: '',
+      description: '',
+      complete_at: '',
+      category: 'fitness'
+    })
+  }
+  
+  const changeForm = (e:any) => {
+    setForm({
+      ...makeRoomForm,
+      [e.target.id]: e.target.value,
+    })
+  }
+  const changeDuration = (e:any, v:any) => {
+      //console.log("e", v);
+      let end = new Date();
+      //console.log("now", end);
+      end.setDate(end.getDate() + v);
+      //console.log("end", end);
+      const year = end.getFullYear();
+      const month = end.getMonth() + 1;
+      const date = end.getDate();
+      const complete_at = `${year}-${month}-${date}`;
+      //console.log(complete_at);
+      setForm({
+        ...makeRoomForm,
+        complete_at: complete_at
+      })
+      
+  }
+  
   return (
     <div
       className="content"
@@ -14,6 +85,7 @@ const MakeRoom: React.FC = () => {
     >
       <LogoBar />
       <form
+        onSubmit={confirmRoom}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -21,6 +93,8 @@ const MakeRoom: React.FC = () => {
         }}
       >
         <TextField
+          id="title"
+          onChange={changeForm}
           required
           label="Room title"
           InputLabelProps={{
@@ -33,6 +107,8 @@ const MakeRoom: React.FC = () => {
           fullWidth
         />
         <TextField
+          id="description"
+          onChange={changeForm}
           required
           label="Description"
           InputLabelProps={{
@@ -52,22 +128,25 @@ const MakeRoom: React.FC = () => {
           Duration
         </Typography>
         <Slider
+          id="duration"
+          onChange={changeDuration}
           defaultValue={7}
           getAriaValueText={valueDuration}
           aria-labelledby="duration-slider"
           valueLabelDisplay="auto"
           step={1}
-          min={0}
+          min={1}
           max={30}
+          marks={marks}
         />
+        <Button
+          type="submit"
+          variant="outlined"
+          style={{ margin: 20, color: "#2575fc", borderColor: "#2575fc" }}
+        >
+          Make new room
+        </Button>
       </form>
-      <Button
-        variant="outlined"
-        style={{ margin: 20, color: "#2575fc", borderColor: "#2575fc" }}
-        onClick={() => (window.location.href = "/rooms")}
-      >
-        Make new room
-      </Button>
     </div>
   );
 };
