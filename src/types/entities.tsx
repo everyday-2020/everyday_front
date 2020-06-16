@@ -9,6 +9,7 @@ export interface VideoEntity extends Entity {
   length: number;
   user: UserEntity;
   location: string;
+  thumbnail: string;
 }
 
 export interface RoomEntity extends Entity {

@@ -29,14 +29,14 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
   playVideo,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+
+  const radius = (clicks: number) => {
+    return 16 * (Math.log(clicks + 1) + 1);
+  };
+  const radiuses = videos.map(({ clicks }) => radius(clicks));
   useEffect(() => {
     const { width: rootWidth = 0, height: rootHeight = 0 } =
       svgRef.current?.getBoundingClientRect() || {};
-
-    const radius = (clicks: number) => {
-      return 16 * (Math.log(clicks + 1) + 1);
-    };
-    const radiuses = videos.map(({ clicks }) => radius(clicks));
 
     let simulation = forceSimulation<Datum>(videos)
       .alphaMin(0.1)
@@ -46,23 +46,23 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
         "collision",
         forceCollide<Datum>().radius((d, i) => radiuses[i] + FONT_SIZE)
       );
-    // const masks = select(svgRef.current)
-    //   .selectAll("mask")
-    //   .data(videos as Datum[])
-    //   .join("mask")
-    //   .attr("id", ({ id }) => `mask-${date.getDate()}-${id}`);
-    // masks
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", 0)
-    //   .attr("width", rootWidth)
-    //   .attr("height", rootHeight)
-    //   .attr("fill", "green");
-    // masks
-    //   .append("circle")
-    //   .attr("r", (d, i) => radiuses[i])
-    //   .attr("fill", "white")
-    // .attr("stroke", "green");
+    const masks = select(svgRef.current)
+      .selectAll("mask")
+      .data(videos as Datum[])
+      .join("mask")
+      .attr("id", ({ id }) => `mask-${date.getDate()}-${id}`);
+    masks
+      .append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", rootWidth)
+      .attr("height", rootHeight)
+      .attr("fill", "black");
+    masks
+      .append("circle")
+      .attr("r", (d, i) => radiuses[i])
+      .attr("fill", "white")
+      .attr("stroke", "green");
     const groups = select(svgRef.current)
       .selectAll<SVGGElement, Datum>("g")
       .data(videos as Datum[])
@@ -74,7 +74,6 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
           d.y = event.y;
         })
       );
-
     const captions = groups
       .append("text")
       .text(({ user }: VideoEntity) => user.nickname)
@@ -84,29 +83,18 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       .append("circle")
       .attr("stroke-width", "4px")
       .attr("stroke", "url(#gradient)")
-      .attr("fill", "transparent")
+      .attr("fill", (d) => `transparent`)
       .attr("r", (d, i) => radiuses[i] + 1);
 
     const thumbnails = groups
-      .append("foreignObject")
-      .attr("fill", "black")
+      .append("image")
       .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
       .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
-      .attr("mask", ({ id }) => `url(#mask-${date.getDate()}-${id})`)
+      .attr("xlink:href", (d) => d.thumbnail)
       .on("click", (d) => {
         playVideo(d);
-      });
-
-    thumbnails
-      .append("xhtml:video")
-      .attr("class", "bubble-thumbnail")
-      .attr("autoplay", "")
-      .attr("muted", "")
-      .attr("loop", "")
-      .attr("oncanplay", "this.muted=true")
-      .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`)
-      .append("xhtml:source")
-      .attr("src", ({ location }) => location);
+      })
+      .attr("style", ({ id }) => `mask: url(#mask-${date.getDate()}-${id})`);
 
     const tick = () => {
       thumbnails
@@ -127,24 +115,16 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
             Math.min(d.y || 0, rootHeight - svg_padding)
           );
           return (d.y || 0) - r * VIDEO_CLOSEUP;
-        })
-        .attr("clip-path", ({ x = 0, y = 0 }, i) => {
-          const r = radiuses[i];
-          return `circle(${r}px at ${2 * r * VIDEO_CLOSEUP - x}px ${
-            2 * r * VIDEO_CLOSEUP - y
-          }px )`;
         });
       rims.attr("cx", ({ x = 0 }) => x).attr("cy", ({ y = 0 }) => y);
-      // masks
-      //   .select("circle")
-      //   .attr("cx", ({ x = 0 }, i) => {
-      //     const r = radiuses[i];
-      //     return x;
-      //   })
-      //   .attr("cy", ({ y = 0 }, i) => {
-      //     const r = radiuses[i];
-      //     return y;
-      //   });
+      masks
+        .select("circle")
+        .attr("cx", ({ x = 0 }, i) => {
+          return x;
+        })
+        .attr("cy", ({ y = 0 }, i) => {
+          return y;
+        });
       captions
         .attr("x", ({ x = 0 }) => x)
         .attr("y", ({ y = 0 }, i) => radiuses[i] + y + FONT_SIZE);

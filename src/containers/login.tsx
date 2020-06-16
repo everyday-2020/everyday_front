@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -73,79 +73,13 @@ const buttonStyles = makeStyles((theme) => ({
   submit: {
     backgroundColor: "#D3D3D3",
     color: "#005bea",
+    marginBottom: "10px",
   },
 }));
 
-function PasswordTextField(props) {
-  const classes = tfStyles();
-
-  return (
-    <ThemeProvider theme={tf_theme}>
-      <TextField
-        className={classes.root}
-        variant="filled"
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="Password"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-        InputProps={{
-          disableUnderline: true,
-        }}
-      />
-    </ThemeProvider>
-  );
-}
-function UsernameTextField(props) {
-  const classes = tfStyles();
-  return (
-    <ThemeProvider theme={tf_theme}>
-      <TextField
-        className={classes.root}
-        variant="filled"
-        margin="normal"
-        required
-        fullWidth
-        id="email"
-        label="Email Address"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        InputProps={{
-          disableUnderline: true,
-        }}
-      />
-    </ThemeProvider>
-  );
-}
-function SignInButton() {
-  const classes = buttonStyles();
-  return (
-    <div className={classes.container}>
-      <Link
-        href="./rooms"
-        style={{
-          textDecoration: "none",
-        }}
-      >
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.submit}
-        >
-          Sign In
-        </Button>
-      </Link>
-    </div>
-  );
-}
-
 export default function SignIn() {
   const classes = useStyles();
+  const button_classes = buttonStyles();
   const tf_classes = tfStyles();
 
   const [ signInForm, setForm ] = useState<SignInForm>({
@@ -189,9 +123,60 @@ export default function SignIn() {
         })}
       >
         <div className={classes.paper}>
-          <UsernameTextField></UsernameTextField>
-          <PasswordTextField></PasswordTextField>
-          <SignInButton></SignInButton>
+          <form onSubmit={confirmSignIn}>
+            <ThemeProvider theme={tf_theme}>
+              <TextField
+                onChange={changeForm}
+                className={tf_classes.root}
+                variant="filled"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+              <TextField
+                onChange={changeForm}
+                className={tf_classes.root}
+                variant="filled"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
+            <div className={button_classes.container}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={button_classes.submit}
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={signUpPage}
+              fullWidth
+              variant="contained"
+              className={button_classes.submit}
+            >
+              Sign Up
+            </Button>
+            </div>
+          </form>
         </div>
       </ThemeProvider>
     </Container>
