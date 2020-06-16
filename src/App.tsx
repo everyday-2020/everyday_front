@@ -12,8 +12,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/rooms">
-          <RoomList />
+        <Route path="/signin">
+          <Login />
         </Route>
         <Route path="/room">
           <Room />
@@ -25,7 +25,7 @@ function App() {
           <SignUp />
         </Route>
         <Route path="/">
-          <Login />
+          <RoomList />
         </Route>
       </Switch>
     </Router>

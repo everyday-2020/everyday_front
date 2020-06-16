@@ -94,15 +94,20 @@ export default function SignIn() {
     e.preventDefault();
     const request = axios.post(url, {
       user: signInForm
-    })
+    }, { withCredentials: true })
     .then( response => {
       console.log( response );
       alert("Login Success");
-      window.location.href="/rooms";
+      window.location.href="/";
     })
     .catch( error => {
       console.log(error);
       alert("Login Failed");
+      window.location.href="/signin";
+    })
+    setForm({
+      username: '',
+      password: ''
     })
   }
 
