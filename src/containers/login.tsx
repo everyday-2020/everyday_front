@@ -137,6 +137,29 @@ function SignInButton() {
   );
 }
 
+function SignUpButton() {
+  const classes = buttonStyles();
+  return (
+    <div className={classes.container}>
+      <Link
+        href="./signup"
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          className={classes.submit}
+        >
+          Sign Up
+        </Button>
+      </Link>
+    </div>
+  )
+}
+
 export default function SignIn() {
   const classes = useStyles();
   const tf_classes = tfStyles();
@@ -154,6 +177,7 @@ export default function SignIn() {
           <UsernameTextField></UsernameTextField>
           <PasswordTextField></PasswordTextField>
           <SignInButton></SignInButton>
+          <SignUpButton></SignUpButton>
         </div>
       </ThemeProvider>
     </Container>
