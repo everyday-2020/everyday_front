@@ -2,10 +2,12 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import axios from "axios";
+import { login } from "../api/login";
+//import FormControlLabel from "@material-ui/core/FormControlLabel";
+//import Checkbox from "@material-ui/core/Checkbox";
+//import Link from "@material-ui/core/Link";
+//import Grid from "@material-ui/core/Grid";
 import {
   makeStyles,
   createMuiTheme,
@@ -13,6 +15,11 @@ import {
 } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import LogoBar from "../components/logobar";
+
+interface SignInForm {
+  username: string;
+  password: string;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +147,37 @@ function SignInButton() {
 export default function SignIn() {
   const classes = useStyles();
   const tf_classes = tfStyles();
+
+  const [ signInForm, setForm ] = useState<SignInForm>({
+    username: '',
+    password: ''
+  });
+
+  const { username, password } = signInForm;
+
+  const signUpPage = (e:any) => {
+    e.preventDefault();
+    window.location.href="/signup";
+  }
+
+  const confirmSignIn = (e:any) => {
+    e.preventDefault();
+    
+    login(signInForm);
+
+    setForm({
+      username: '',
+      password: ''
+    })
+  }
+
+  const changeForm = (e:any) => {
+    setForm({
+      ...signInForm,
+      [e.target.id]: e.target.value
+    })
+    console.log("signInForm", signInForm);
+  }
 
   return (
     <Container component="main" className={classes.root}>
