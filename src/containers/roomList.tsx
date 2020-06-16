@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-
+import React, { FC, useEffect } from "react";
 import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
 import "./roomList.scss";
@@ -8,6 +7,9 @@ import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
+import axios from "axios";
+
+const url = "http://localhost:3000/user"
 
 interface RoomListProps {
   rooms?: RoomEntity[];
@@ -17,6 +19,20 @@ const RoomList: FC<RoomListProps> = ({
   rooms = roomsMock,
   user = userMock,
 }) => {
+  useEffect(() => {
+    const request = axios.get(url, {
+      withCredentials: true
+    })
+    .then( response => {
+      console.log(response);
+    }
+    )
+    .catch( error => {
+      console.log(error);
+      //alert("Login please");
+      window.location.href="/signin";
+    })
+  })
   return (
     <div className="rooms-root">
       <LogoBar></LogoBar>
