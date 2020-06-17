@@ -91,10 +91,11 @@ const MakeRoom: React.FC = () => {
   const onEmojiClick = (e, emojiObject) => {
     setChosenEmoji(emojiObject.emoji);
     console.log(emojiObject);
-    console.log(emojiObject.emoji.names);
+    console.log(emojiObject.names[0]);
+    const name = emojiObject.names.length == 1 ? (emojiObject.names[0]) : (emojiObject.names[1]);
     setForm({
       ...makeRoomForm,
-      category: emojiObject.names[0],
+      category: name,
     })
     handleClose();
   }
