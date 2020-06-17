@@ -6,6 +6,7 @@ import {
   DialogContent,
   Container,
   CssBaseline,
+  Avatar,
 } from "@material-ui/core";
 import {
   makeStyles,
@@ -14,7 +15,7 @@ import {
 } from "@material-ui/core/styles";
 import { signup } from "../api";
 import Picker from "emoji-picker-react";
-
+import BigEmoji from "../components/bigEmoji";
 
 interface SignUpForm {
   username: string;
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     height: "100%",
-    
   },
   paper: {
     display: "flex",
@@ -37,13 +37,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   profile: {
-    alignItmes: "center",
-    backgroundColor: "white",
-    borderRadius: 10,
-    justifyContent: "center",
-    padding: "5px",
-    marginTop: "10px",
-    marginBottom: "20px",
+    width: theme.spacing(10),
+    height: theme.spacing(10),
   },
 }));
 
@@ -86,6 +81,7 @@ const buttonStyles = makeStyles((theme) => ({
     backgroundColor: "#D3D3D3",
     color: "#005bea",
     marginBottom: "10px",
+    marginTop: "10px",
   },
 }));
 
@@ -158,106 +154,115 @@ export default function SignUp() {
   };
 
   return (
-      <Container component="main" className={classes.root}>
-        <CssBaseline />
-        <ThemeProvider
-          theme={createMuiTheme({
-            palette: { type: "dark", primary: { main: "#f9f9f9" } },
-          })}
+    <Container component="main" className={classes.root}>
+      <CssBaseline />
+      <Avatar className={classes.profile}>
+        <div>
+          {chosenEmoji ? (
+            <BigEmoji
+              emoji={signUpForm.profile_pic}
+              style={{
+                backgroundColor: "transparent",
+                fontSize: "3.75rem",
+                width: "4rem",
+                height: "4rem",
+                marginLeft: "auto",
+                alignSelf: "center",
+              }}
+            />
+          ) : (
+            <span style={{ color: "#525252" }}> none </span>
+          )}
+        </div>
+      </Avatar>
+      <div>
+        <Button
+          onClick={showPicker}
+          variant="contained"
+          size="small"
+          className={bt_classes.button}
         >
-          <div className={classes.paper}>
-            <form onSubmit={confirmSignUp}>
-              <ThemeProvider theme={tf_theme}>
-                <TextField
-                  className={tf_classes.root}
-                  label="Username"
-                  onChange={changeForm}
-                  id="username"
-                  fullWidth
-                  variant="filled"
-                  margin="normal"
-                  required
-                  autoComplete="username"
-                  autoFocus
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
-                />
-                <TextField
-                  className={tf_classes.root}
-                  label="Nickname"
-                  onChange={changeForm}
-                  id="nickname"
-                  fullWidth
-                  variant="filled"
-                  margin="normal"
-                  required
-                  autoComplete="nickname"
-                  autoFocus
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
-                />
-                <TextField
-                  className={tf_classes.root}
-                  label="Password"
-                  onChange={changeForm}
-                  id="password"
-                  type="password"
-                  fullWidth
-                  variant="filled"
-                  margin="normal"
-                  required
-                  autoComplete="password"
-                  autoFocus
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
-                />
-              </ThemeProvider>
-
-              <div className={classes.profile}>
-                {chosenEmoji ? (
-                  <span>{chosenEmoji}</span>
-                ) : (
-                  <span style={{ color: "#525252" }}>
-                    Choose the Profile Emoji
-                  </span>
-                )}
-                 <Button
-                  onClick={showPicker}
-                  variant="contained"
-                  size="small"
-                  className={bt_classes.button}
-                  style={{marginLeft:"5px"}}
-                >
-                  Choose
-                </Button>
-              </div>
-             
-              <div className={bt_classes.container}>
-                <Button
-                  type="submit"
-                  variant="outlined"
-                  className={bt_classes.button}
-                >
-                  Sign Up
-                </Button>
-              </div>
-            </form>
-          </div>
-        </ThemeProvider>
-        <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
-              <DialogContent
-                style={{
-                  width: 300,
-                  height: 300,
-                  overflow: "hidden",
+          Choose
+        </Button>
+      </div>
+      <ThemeProvider
+        theme={createMuiTheme({
+          palette: { type: "dark", primary: { main: "#f9f9f9" } },
+        })}
+      >
+        <div className={classes.paper}>
+          <form onSubmit={confirmSignUp}>
+            <ThemeProvider theme={tf_theme}>
+              <TextField
+                className={tf_classes.root}
+                label="Username"
+                onChange={changeForm}
+                id="username"
+                fullWidth
+                variant="filled"
+                margin="normal"
+                required
+                autoComplete="username"
+                autoFocus
+                InputProps={{
+                  disableUnderline: true,
                 }}
+              />
+              <TextField
+                className={tf_classes.root}
+                label="Nickname"
+                onChange={changeForm}
+                id="nickname"
+                fullWidth
+                variant="filled"
+                margin="normal"
+                required
+                autoComplete="nickname"
+                autoFocus
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+              <TextField
+                className={tf_classes.root}
+                label="Password"
+                onChange={changeForm}
+                id="password"
+                type="password"
+                fullWidth
+                variant="filled"
+                margin="normal"
+                required
+                autoComplete="password"
+                autoFocus
+                InputProps={{
+                  disableUnderline: true,
+                }}
+              />
+            </ThemeProvider>
+            <div className={bt_classes.container}>
+              <Button
+                type="submit"
+                variant="outlined"
+                className={bt_classes.button}
               >
-                <Picker onEmojiClick={onEmojiClick} />
-              </DialogContent>
-            </Dialog>
-      </Container>
+                Sign Up
+              </Button>
+            </div>
+          </form>
+        </div>
+      </ThemeProvider>
+      <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
+        <DialogContent
+          style={{
+            width: 300,
+            height: 300,
+            overflow: "hidden",
+          }}
+        >
+          <Picker onEmojiClick={onEmojiClick} />
+        </DialogContent>
+      </Dialog>
+    </Container>
   );
 }
