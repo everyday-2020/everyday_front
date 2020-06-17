@@ -23,5 +23,5 @@ export interface RoomEntity extends Entity {
 export interface UserEntity extends Entity {
   nickname: string;
   username: string;
-  profilePic: string;
+  profile_pic: string;
 }

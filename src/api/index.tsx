@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RoomEntity } from "../types/entities";
+import { RoomEntity, UserEntity } from "../types/entities";
 import { useHistory } from "react-router-dom";
 
 const baseURL = "http://localhost:3000";
@@ -60,7 +60,7 @@ export function login(signInForm: SignInForm) {
 }
 
 export async function getUser() {
-  const response = await instance.get(userUrl);
+  const response = await instance.get<UserEntity>(userUrl);
   return response.data;
 }
 

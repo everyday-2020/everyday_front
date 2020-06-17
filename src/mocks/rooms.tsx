@@ -48,5 +48,5 @@ export const userMock: UserEntity = {
   modified_at: "2020-01-02",
   nickname: "버거킹",
   username: "I love burger...",
-  profilePic: "hamburger",
+  profile_pic: "hamburger",
 };
