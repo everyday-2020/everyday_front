@@ -1,6 +1,5 @@
 import axios from "axios";
 import { RoomEntity, UserEntity } from "../types/entities";
-import { useHistory } from "react-router-dom";
 
 const baseURL = "http://localhost:3000";
 
@@ -43,15 +42,22 @@ interface MakeRoomForm {
   category: string;
 }
 
-export function login(signInForm: SignInForm) {
+export function login(signInForm: SignInForm,  prevUrl: String) {
   instance
     .post(loginUrl, {
       user: signInForm,
     })
     .then((response) => {
-      console.log(response);
+      const urlSplit = prevUrl.split('/');
       alert("Login Success");
-      window.location.href = "/";
+      //invited
+      if(urlSplit[3]==='room'){
+        const invitedUrl = "/room/".concat(urlSplit[4]);
+        window.location.href = invitedUrl;
+      }
+      else{
+        window.location.href = "/";
+      }      
     })
     .catch((error) => {
       console.log(error);
@@ -98,4 +104,11 @@ export function makeRoom(makeRoomForm: MakeRoomForm) {
 export async function getRooms() {
   const response = await instance.get(roomUrl);
   return await response.data;
+}
+
+export function patchRoom(rooms: RoomEntity[]) {
+  const roomcode = window.location.href.split('/')[4];
+  const joinRoomUrl = roomUrl.concat('/', roomcode);
+  instance.patch(joinRoomUrl);
+
 }
