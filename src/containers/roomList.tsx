@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
@@ -7,8 +6,6 @@ import "./roomList.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
-import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import { getUser, getRooms } from "../api";
 
 interface RoomListProps {}
@@ -17,7 +14,6 @@ const RoomList: FC<RoomListProps> = () => {
   const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [userInfo, setUser] = useState<UserEntity>(userMock);
 
-  const history = useHistory();
   useEffect(() => {
     (async () => {
       const rooms = await getRooms();

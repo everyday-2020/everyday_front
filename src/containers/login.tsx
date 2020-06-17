@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import axios from "axios";
 import { login } from "../api";
 //import FormControlLabel from "@material-ui/core/FormControlLabel";
 //import Checkbox from "@material-ui/core/Checkbox";
@@ -82,36 +81,34 @@ export default function SignIn() {
   const button_classes = buttonStyles();
   const tf_classes = tfStyles();
 
-  const [ signInForm, setForm ] = useState<SignInForm>({
-    username: '',
-    password: ''
+  const [signInForm, setForm] = useState<SignInForm>({
+    username: "",
+    password: "",
   });
 
-  const { username, password } = signInForm;
-
-  const signUpPage = (e:any) => {
+  const signUpPage = (e: any) => {
     e.preventDefault();
-    window.location.href="/signup";
-  }
+    window.location.href = "/signup";
+  };
 
-  const confirmSignIn = (e:any) => {
+  const confirmSignIn = (e: any) => {
     e.preventDefault();
-    
+
     login(signInForm);
 
     setForm({
-      username: '',
-      password: ''
-    })
-  }
+      username: "",
+      password: "",
+    });
+  };
 
-  const changeForm = (e:any) => {
+  const changeForm = (e: any) => {
     setForm({
       ...signInForm,
-      [e.target.id]: e.target.value
-    })
+      [e.target.id]: e.target.value,
+    });
     console.log("signInForm", signInForm);
-  }
+  };
 
   return (
     <Container component="main" className={classes.root}>
@@ -159,22 +156,22 @@ export default function SignIn() {
               />
             </ThemeProvider>
             <div className={button_classes.container}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className={button_classes.submit}
-            >
-              Sign In
-            </Button>
-            <Button
-              onClick={signUpPage}
-              fullWidth
-              variant="contained"
-              className={button_classes.submit}
-            >
-              Sign Up
-            </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={button_classes.submit}
+              >
+                Sign In
+              </Button>
+              <Button
+                onClick={signUpPage}
+                fullWidth
+                variant="contained"
+                className={button_classes.submit}
+              >
+                Sign Up
+              </Button>
             </div>
           </form>
         </div>

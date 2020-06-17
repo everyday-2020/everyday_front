@@ -1,6 +1,5 @@
 import axios from "axios";
 import { RoomEntity, UserEntity } from "../types/entities";
-import { useHistory } from "react-router-dom";
 
 const baseURL = "http://localhost:3000";
 
@@ -85,6 +84,5 @@ export function makeRoom(makeRoomForm: MakeRoomForm) {
 }
 
 export async function getRooms() {
-  const response = await instance.get(roomUrl);
-  return await response.data;
+  return instance.get<RoomEntity[]>(roomUrl).then((response) => response.data);
 }

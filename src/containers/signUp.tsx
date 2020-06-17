@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import {
   TextField,
   Button,
@@ -138,7 +138,7 @@ export default function SignUp() {
     console.log(emojiObject);
     console.log(emojiObject.names[0]);
     const name =
-      emojiObject.names.length == 1
+      emojiObject.names.length === 1
         ? emojiObject.names[0]
         : emojiObject.names[1];
     setForm({
