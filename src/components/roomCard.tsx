@@ -18,12 +18,13 @@ const RoomCard: FC<RoomCardProps> = ({ room }) => {
         history.push(`/room/${room.invite_code}`);
       }}
     >
-      <div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <h3>{room.title}</h3>
-
-        {room.description}
-        <br />
-        {new Date(room.complete_at).toLocaleDateString()}
+        <div style={{ flex: 0, marginTop: "auto" }}>
+          {room.description}
+          <br />
+          {new Date(room.complete_at).toLocaleDateString()}
+        </div>
       </div>
       <BigEmoji
         emoji={room.category}

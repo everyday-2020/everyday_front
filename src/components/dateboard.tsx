@@ -2,6 +2,7 @@ import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
 
 import { VideoEntity } from "../types/entities";
 import VideoBubbleCanvas from "./videoBubbleCanvas";
+import styles from "./dateboard.module.scss";
 
 interface DateBoardProps {
   date: Date;
@@ -14,17 +15,7 @@ const DateBoard: FunctionComponent<DateBoardProps> = ({
   playVideo,
 }) => {
   return (
-    <div
-      style={{
-        minHeight: "100px",
-        display: "flex",
-        flexDirection: "column",
-        paddingTop: "10px",
-        backgroundColor: "#ffffff",
-        color: "#98979c",
-        borderTop: "1px solid #6f6e75",
-      }}
-    >
+    <div className={styles.dateboard}>
       <span style={{ margin: "0 auto" }}>{date.toLocaleDateString()}</span>
       <VideoBubbleCanvas videos={videos} date={date} playVideo={playVideo} />
     </div>
