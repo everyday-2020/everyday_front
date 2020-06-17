@@ -56,6 +56,7 @@ export function login(signInForm: SignInForm) {
     .catch((error) => {
       console.log(error);
       alert("Login Failed");
+      window.location.href = "/signin";
     });
 }
 
