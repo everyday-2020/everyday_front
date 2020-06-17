@@ -1,113 +1,263 @@
 import React, { useState, useCallback } from "react";
-import { TextField, Avatar, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  TextField,
+  Button,
+  Dialog,
+  DialogContent,
+  Container,
+  CssBaseline,
+} from "@material-ui/core";
+import {
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
 import { signup } from "../api";
+import Picker from "emoji-picker-react";
+
 
 interface SignUpForm {
-    username: string;
-    nickname: string;
-    password: string;
-    profile_pic: string;
-  }
-
-const profileStyles = makeStyles((theme) => ({
-    root : {
-        display: 'flex',
-    },
-    profile : {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
-        color: theme.palette.getContrastText('#2575fc'),
-        backgroundColor: '#2575fc',
-    },
-    icon : {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
-    },
-    button : {
-        color: '#2575fc',
-    }
-})) 
-
-/*
-type SignFromProps = {
-    onShowPicture: (signUpForm: { username: string; nickname: string; password: string; profile_pic: string }) => void;
-};
-*/
-
-export default function SignUp() {
-    const classes = profileStyles();
-
-    const [signUpForm, setForm] = useState<SignUpForm>({
-        username: '',
-        nickname: '',
-        password: '',
-        profile_pic: process.env.PUBLIC_URL + '/tmp_profile_pic.png'
-    });
-
-    const { username, nickname, password, profile_pic } = signUpForm;
-
-    console.log("signUpForm ", signUpForm);
-
-    const changePicture = (e:any) => {
-        e.preventDefault();
-        const file = URL.createObjectURL(e.target.files[0]);
-        if(file != null){
-            setForm({
-                ...signUpForm,
-                profile_pic: URL.createObjectURL(e.target.files[0])
-            });
-        }
-    };
-    
-    const confirmSignUp = (e:any) => {
-        e.preventDefault();
-        //console.log("confirmSignUp");
-        //console.log("signupForm", signUpForm);
-        //console.log("username", username);
-        //console.log("password", password);
-        
-        signup(signUpForm);
-
-        setForm({
-            username: '',
-            nickname: '',
-            password: '',
-            profile_pic: process.env.PUBLIC_URL + '/tmp_profile_pic.png'
-        })
-        
-    }
-
-    const changeForm = (e:any) => {
-        setForm({
-            ...signUpForm,
-            [e.target.id]: e.target.value,
-        });
-        //console.log("signup form", signUpForm);
-        //console.log("e.target", e.target.id);
-        //console.log("name ", e.target.name);
-        //console.log("value", e.target.value);
-    }
-    return (
-        <div>
-            <form onSubmit={confirmSignUp}>
-                <TextField label="username" onChange={changeForm} id="username" fullWidth/>
-                <TextField label="nickname" onChange={changeForm} id="nickname" fullWidth/>
-                <TextField label="password" onChange={changeForm} id="password" type="password" fullWidth/>
-                <div>
-                    <Avatar alt="profile_pic" className={classes.profile} src={ profile_pic }>
-                    </Avatar>
-                    <div>
-                        <input type="file" id="upload_pic" style={{ display: "none" }} onChange={changePicture}/>
-                    </div>
-                    <label htmlFor="upload_pic">
-                        <Button variant="outlined" className={classes.button} component="span">Select Picture</Button>
-                    </label>
-                </div>
-                <Button type="submit" variant="outlined" className={classes.button}>Sign Up</Button>
-            </form>
-        </div>
-    );
+  username: string;
+  nickname: string;
+  password: string;
+  profile_pic: string;
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: "#005bea",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  profile: {
+    alignItmes: "center",
+    backgroundColor: "white",
+    borderRadius: 10,
+    justifyContent: "center",
+    padding: "5px",
+    marginTop: "10px",
+    marginBottom: "20px",
+  },
+}));
 
+const tfStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    justifyContent: "center",
+  },
+}));
+const tf_theme = createMuiTheme({
+  overrides: {
+    MuiFilledInput: {
+      root: {
+        color: "gray",
+        backgroundColor: "white",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderRadius: 10,
+        "&$focused": {
+          backgroundColor: "transparent",
+          borderRadius: 10,
+        },
+        "&:hover": {
+          "@media (hover: none)": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
+  },
+});
+
+const buttonStyles = makeStyles((theme) => ({
+  container: {
+    justifyContent: "center",
+    alignItmes: "center",
+  },
+  button: {
+    backgroundColor: "#D3D3D3",
+    color: "#005bea",
+    marginBottom: "10px",
+  },
+}));
+
+export default function SignUp() {
+  const classes = useStyles();
+  const bt_classes = buttonStyles();
+  const tf_classes = tfStyles();
+
+  const [signUpForm, setForm] = useState<SignUpForm>({
+    username: "",
+    nickname: "",
+    password: "",
+    profile_pic: "",
+  });
+
+  //const { username, nickname, password, profile_pic } = signUpForm;
+
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+
+  console.log("signUpForm ", signUpForm);
+
+  //dialog
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const confirmSignUp = (e: any) => {
+    e.preventDefault();
+
+    signup(signUpForm);
+
+    setForm({
+      username: "",
+      nickname: "",
+      password: "",
+      profile_pic: "",
+    });
+  };
+
+  const changeForm = (e: any) => {
+    setForm({
+      ...signUpForm,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const onEmojiClick = (e, emojiObject) => {
+    setChosenEmoji(emojiObject.emoji);
+    console.log(emojiObject);
+    console.log(emojiObject.names[0]);
+    const name =
+      emojiObject.names.length == 1
+        ? emojiObject.names[0]
+        : emojiObject.names[1];
+    setForm({
+      ...signUpForm,
+      profile_pic: name,
+    });
+    handleClose();
+  };
+
+  const showPicker = (e: any) => {
+    e.preventDefault();
+    handleClickOpen();
+  };
+
+  return (
+      <Container component="main" className={classes.root}>
+        <CssBaseline />
+        <ThemeProvider
+          theme={createMuiTheme({
+            palette: { type: "dark", primary: { main: "#f9f9f9" } },
+          })}
+        >
+          <div className={classes.paper}>
+            <form onSubmit={confirmSignUp}>
+              <ThemeProvider theme={tf_theme}>
+                <TextField
+                  className={tf_classes.root}
+                  label="Username"
+                  onChange={changeForm}
+                  id="username"
+                  fullWidth
+                  variant="filled"
+                  margin="normal"
+                  required
+                  autoComplete="username"
+                  autoFocus
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                />
+                <TextField
+                  className={tf_classes.root}
+                  label="Nickname"
+                  onChange={changeForm}
+                  id="nickname"
+                  fullWidth
+                  variant="filled"
+                  margin="normal"
+                  required
+                  autoComplete="nickname"
+                  autoFocus
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                />
+                <TextField
+                  className={tf_classes.root}
+                  label="Password"
+                  onChange={changeForm}
+                  id="password"
+                  type="password"
+                  fullWidth
+                  variant="filled"
+                  margin="normal"
+                  required
+                  autoComplete="password"
+                  autoFocus
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                />
+              </ThemeProvider>
+
+              <div className={classes.profile}>
+                {chosenEmoji ? (
+                  <span>{chosenEmoji}</span>
+                ) : (
+                  <span style={{ color: "#525252" }}>
+                    Choose the Profile Emoji
+                  </span>
+                )}
+                 <Button
+                  onClick={showPicker}
+                  variant="contained"
+                  size="small"
+                  className={bt_classes.button}
+                  style={{marginLeft:"5px"}}
+                >
+                  Choose
+                </Button>
+              </div>
+             
+              <div className={bt_classes.container}>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  className={bt_classes.button}
+                >
+                  Sign Up
+                </Button>
+              </div>
+            </form>
+          </div>
+        </ThemeProvider>
+        <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
+              <DialogContent
+                style={{
+                  width: 300,
+                  height: 300,
+                  overflow: "hidden",
+                }}
+              >
+                <Picker onEmojiClick={onEmojiClick} />
+              </DialogContent>
+            </Dialog>
+      </Container>
+  );
+}

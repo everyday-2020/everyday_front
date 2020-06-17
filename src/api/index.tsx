@@ -72,7 +72,7 @@ export function signup(signUpForm: SignUpForm) {
     .then((response) => {
       alert("Sign Up Success");
       console.log(response);
-      window.location.href = "/";
+      window.location.href = "/signin";
     })
     .catch((error) => {
       console.log(error);

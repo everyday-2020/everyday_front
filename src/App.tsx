@@ -7,6 +7,7 @@ import RoomList from "./containers/roomList";
 import Room from "./containers/room";
 import MakeRoom from "./containers/makeRoom";
 import SignUp from "./containers/signUp";
+import LogoBar from "./components/logobar";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <MakeRoom />
         </Route>
         <Route path="/signup">
+          <LogoBar />
           <SignUp />
         </Route>
         <Route path="/">
