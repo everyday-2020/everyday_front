@@ -1,10 +1,28 @@
 import axios from "axios";
+import { RoomEntity } from "../types/entities";
+import { useHistory } from "react-router-dom";
 
-const apiUrl = "http://localhost:3000";
-const loginUrl = `${apiUrl}/login`;
-const usersUrl = `${apiUrl}/users`;
-const userUrl = `${apiUrl}/user`;
-const roomUrl = `${apiUrl}/rooms`;
+const baseURL = "http://localhost:3000";
+
+const loginUrl = `/login`;
+const usersUrl = `/users`;
+const userUrl = `/user`;
+const roomUrl = `/rooms`;
+
+const instance = axios.create({
+  baseURL,
+  withCredentials: true,
+});
+
+instance.interceptors.response.use(
+  (config) => config,
+  (error) => {
+    if (error.response.status === 403) {
+      window.location.href = "/signin";
+    }
+    return Promise.reject(error);
+  }
+);
 
 interface SignInForm {
   username: string;
@@ -26,14 +44,10 @@ interface MakeRoomForm {
 }
 
 export function login(signInForm: SignInForm) {
-  axios
-    .post(
-      loginUrl,
-      {
-        user: signInForm,
-      },
-      { withCredentials: true }
-    )
+  instance
+    .post(loginUrl, {
+      user: signInForm,
+    })
     .then((response) => {
       console.log(response);
       alert("Login Success");
@@ -42,30 +56,19 @@ export function login(signInForm: SignInForm) {
     .catch((error) => {
       console.log(error);
       alert("Login Failed");
-      window.location.href = "/signin";
     });
 }
 
 export async function getUser() {
-  try {
-    const response = await axios.get(userUrl, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (e) {
-    window.location.href = "/signin";
-  }
+  const response = await instance.get(userUrl);
+  return response.data;
 }
 
 export function signup(signUpForm: SignUpForm) {
-  axios
-    .post(
-      usersUrl,
-      {
-        user: signUpForm,
-      },
-      { withCredentials: true }
-    )
+  instance
+    .post(usersUrl, {
+      user: signUpForm,
+    })
     .then((response) => {
       alert("Sign Up Success");
       console.log(response);
@@ -78,18 +81,20 @@ export function signup(signUpForm: SignUpForm) {
 }
 
 export function makeRoom(makeRoomForm: MakeRoomForm) {
-  axios.post(
-    roomUrl,
-    {
+  instance
+    .post(roomUrl, {
       room: makeRoomForm,
-    },
-    { withCredentials: true }
-  )
-  .then((response) => {
-    alert("New Room is created");
-    window.location.href = "/";
-  })
-  .catch((error) => {
-    alert("Failed");
-  })
+    })
+    .then((response) => {
+      alert("New Room is created");
+      window.location.href = "/";
+    })
+    .catch((error) => {
+      alert("Failed");
+    });
+}
+
+export async function getRooms() {
+  const response = await instance.get(roomUrl);
+  return await response.data;
 }
