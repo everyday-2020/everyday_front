@@ -1,7 +1,7 @@
 interface Entity {
   id: number;
-  createdAt: Date;
-  modifiedAt: Date;
+  created_at: string;
+  modified_at: string;
 }
 
 export interface VideoEntity extends Entity {
@@ -13,15 +13,15 @@ export interface VideoEntity extends Entity {
 }
 
 export interface RoomEntity extends Entity {
-  name: string;
+  title: string;
   description: string;
-  completeAt: Date;
-  inviteCode: string;
+  complete_at: string;
+  invite_code: string;
   category: string;
 }
 
 export interface UserEntity extends Entity {
   nickname: string;
   username: string;
-  profilePic: string;
+  profile_pic: string;
 }

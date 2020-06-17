@@ -11,7 +11,7 @@ interface UsercardProps {
 const UserCard: FC<UsercardProps> = ({ user }) => {
   return (
     <div className="usercard-root">
-      <BigEmoji emoji={user.profilePic}/>
+      <BigEmoji emoji={user.profile_pic} />
       <div className="usercard-name">
         <div className="usercard-nickname">{user.nickname}</div>
         <div className="usercard-username">{user.username}</div>
