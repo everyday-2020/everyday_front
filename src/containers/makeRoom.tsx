@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import LogoBar from "../components/logobar";
-import { TextField, Slider, Typography, Button, Dialog, DialogContent } from "@material-ui/core";
+import {
+  TextField,
+  Slider,
+  Typography,
+  Button,
+  Dialog,
+  DialogContent,
+} from "@material-ui/core";
 import { makeRoom } from "../api";
-import Picker from 'emoji-picker-react';
-
+import Picker from "emoji-picker-react";
 
 interface MakeRoomForm {
   title: string;
@@ -15,28 +21,28 @@ interface MakeRoomForm {
 const marks = [
   {
     value: 1,
-    label: '1',
+    label: "1",
   },
   {
     value: 10,
-    label: '10',
+    label: "10",
   },
   {
     value: 20,
-    label: '20',
+    label: "20",
   },
   {
     value: 30,
-    label: '30',
-  }
-]
+    label: "30",
+  },
+];
 
 const MakeRoom: React.FC = () => {
   const [makeRoomForm, setForm] = useState<MakeRoomForm>({
-    title: '',
-    description: '',
-    complete_at: '',
-    category: ''
+    title: "",
+    description: "",
+    complete_at: "",
+    category: "",
   });
 
   const [chosenEmoji, setChosenEmoji] = useState(null);
@@ -54,59 +60,65 @@ const MakeRoom: React.FC = () => {
   function valueDuration(value) {
     return `${value}`;
   }
-  
-  const confirmRoom = (e:any) => {
+
+  const confirmRoom = async (e: any) => {
     e.preventDefault();
 
     makeRoom(makeRoomForm);
     console.log(makeRoomForm);
     setForm({
-      title: '',
-      description: '',
-      complete_at: '',
-      category: ''
-    })
-  }
-  
-  const changeForm = (e:any) => {
+      title: "",
+      description: "",
+      complete_at: "",
+      category: "",
+    });
+  };
+
+  const changeForm = (e: any) => {
     setForm({
       ...makeRoomForm,
       [e.target.id]: e.target.value,
-    })
-  }
+    });
+  };
 
-  const changeDuration = (e:any, v:any) => {
-      let end = new Date();
-      end.setDate(end.getDate() + v);
-      const year = end.getFullYear();
-      const month = end.getMonth() + 1;
-      const date = end.getDate();
-      const complete_at = `${year}-${month}-${date}`;
-      setForm({
-        ...makeRoomForm,
-        complete_at: complete_at
-      })   
-  }
+  const changeDuration = (e: any, v: any) => {
+    let end = new Date();
+    end.setDate(end.getDate() + v);
+    const year = end.getFullYear();
+    const month = end.getMonth() + 1;
+    const date = end.getDate();
+    const complete_at = `${year}-${month}-${date}`;
+    setForm({
+      ...makeRoomForm,
+      complete_at: complete_at,
+    });
+  };
 
   const onEmojiClick = (e, emojiObject) => {
     setChosenEmoji(emojiObject.emoji);
     console.log(emojiObject);
     console.log(emojiObject.names[0]);
-    const name = emojiObject.names.length == 1 ? (emojiObject.names[0]) : (emojiObject.names[1]);
+    const name =
+      emojiObject.names.length == 1
+        ? emojiObject.names[0]
+        : emojiObject.names[1];
     setForm({
       ...makeRoomForm,
       category: name,
-    })
+    });
     handleClose();
-  }
+  };
 
-  const showPicker = (e:any) => {
+  const showPicker = (e: any) => {
     e.preventDefault();
     handleClickOpen();
-  }
+  };
 
   return (
-    <div className="content" style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}>
+    <div
+      className="content"
+      style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}
+    >
       <LogoBar />
       <form
         onSubmit={confirmRoom}
@@ -169,12 +181,22 @@ const MakeRoom: React.FC = () => {
             gutterBottom
             style={{ marginTop: 15, fontSize: 15, color: "#2575fc" }}
           >
-            Category * :  { chosenEmoji ? (
-            <span>{chosenEmoji}</span>
-          ) : (
-            <span style={{color: '#525252'}} >Choose the category</span>
-          )}
-            <Button onClick={showPicker} variant="contained" size="small" style={{ marginLeft: '5px', color: "#2575fc", borderColor: "#2575fc" }}>
+            Category * :{" "}
+            {chosenEmoji ? (
+              <span>{chosenEmoji}</span>
+            ) : (
+              <span style={{ color: "#525252" }}>Choose the category</span>
+            )}
+            <Button
+              onClick={showPicker}
+              variant="contained"
+              size="small"
+              style={{
+                marginLeft: "5px",
+                color: "#2575fc",
+                borderColor: "#2575fc",
+              }}
+            >
               Choose
             </Button>
           </Typography>
@@ -188,19 +210,18 @@ const MakeRoom: React.FC = () => {
         </Button>
       </form>
       <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
-              <DialogContent
-                style={{
-                  width: 300,
-                  height: 300,
-                  overflow: "hidden",
-                }}
-              >
-                <Picker onEmojiClick={onEmojiClick} />
-              </DialogContent>
+        <DialogContent
+          style={{
+            width: 300,
+            height: 300,
+            overflow: "hidden",
+          }}
+        >
+          <Picker onEmojiClick={onEmojiClick} />
+        </DialogContent>
       </Dialog>
     </div>
   );
 };
 
 export default MakeRoom;
-

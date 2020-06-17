@@ -34,7 +34,7 @@ const RoomList: FC<RoomListProps> = () => {
       </div>
       <div className="rooms-list">
         {rooms.map((room) => (
-          <RoomCard room={room} />
+          <RoomCard room={room} key={room.id} />
         ))}
       </div>
     </div>

@@ -9,20 +9,10 @@ const usersUrl = `/users`;
 const userUrl = `/user`;
 const roomUrl = `/rooms`;
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL,
   withCredentials: true,
 });
-
-instance.interceptors.response.use(
-  (config) => config,
-  (error) => {
-    if (error.response.status === 403) {
-      window.location.href = "/signin";
-    }
-    return Promise.reject(error);
-  }
-);
 
 interface SignInForm {
   username: string;
@@ -61,8 +51,7 @@ export function login(signInForm: SignInForm) {
 }
 
 export async function getUser() {
-  const response = await instance.get<UserEntity>(userUrl);
-  return response.data;
+  return instance.get<UserEntity>(userUrl).then((response) => response.data);
 }
 
 export function signup(signUpForm: SignUpForm) {

@@ -77,7 +77,8 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
     const captions = groups
       .append("text")
       .text(({ user }: VideoEntity) => user.nickname)
-      .attr("text-anchor", "middle");
+      .attr("text-anchor", "middle")
+      .attr("fill", "#ffffff");
 
     const rims = groups
       .append("circle")
@@ -136,7 +137,6 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       ref={svgRef}
       style={{
         flex: 1,
-        backgroundColor: "#ffffff",
         minHeight: `${videos.length * 64}px`,
         fontSize: `${FONT_SIZE}`,
       }}
