@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import LogoBar from "../components/logobar";
-import { TextField, Slider, Typography, Button } from "@material-ui/core";
+import { TextField, Slider, Typography, Button, Dialog, DialogContent } from "@material-ui/core";
 import { makeRoom } from "../api";
+import Picker from 'emoji-picker-react';
+
 
 interface MakeRoomForm {
   title: string;
@@ -34,9 +36,21 @@ const MakeRoom: React.FC = () => {
     title: '',
     description: '',
     complete_at: '',
-    category: 'fitness'
+    category: ''
   });
-  
+
+  const [chosenEmoji, setChosenEmoji] = useState(null);
+
+  //dialog
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   function valueDuration(value) {
     return `${value}`;
   }
@@ -50,7 +64,7 @@ const MakeRoom: React.FC = () => {
       title: '',
       description: '',
       complete_at: '',
-      category: 'fitness'
+      category: ''
     })
   }
   
@@ -60,29 +74,37 @@ const MakeRoom: React.FC = () => {
       [e.target.id]: e.target.value,
     })
   }
+
   const changeDuration = (e:any, v:any) => {
-      //console.log("e", v);
       let end = new Date();
-      //console.log("now", end);
       end.setDate(end.getDate() + v);
-      //console.log("end", end);
       const year = end.getFullYear();
       const month = end.getMonth() + 1;
       const date = end.getDate();
       const complete_at = `${year}-${month}-${date}`;
-      //console.log(complete_at);
       setForm({
         ...makeRoomForm,
         complete_at: complete_at
-      })
-      
+      })   
   }
-  
+
+  const onEmojiClick = (e, emojiObject) => {
+    setChosenEmoji(emojiObject.emoji);
+    //console.log(emojiObject);
+    setForm({
+      ...makeRoomForm,
+      category: emojiObject.emoji.names,
+    })
+    handleClose();
+  }
+
+  const showPicker = (e:any) => {
+    e.preventDefault();
+    handleClickOpen();
+  }
+
   return (
-    <div
-      className="content"
-      style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}
-    >
+    <div className="content" style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}>
       <LogoBar />
       <form
         onSubmit={confirmRoom}
@@ -125,7 +147,7 @@ const MakeRoom: React.FC = () => {
           gutterBottom
           style={{ marginTop: 15, fontSize: 15, color: "#2575fc" }}
         >
-          Duration
+          Duration *
         </Typography>
         <Slider
           id="duration"
@@ -139,6 +161,22 @@ const MakeRoom: React.FC = () => {
           max={30}
           marks={marks}
         />
+        <div>
+          <Typography
+            id="category-picker"
+            gutterBottom
+            style={{ marginTop: 15, fontSize: 15, color: "#2575fc" }}
+          >
+            Category * :  { chosenEmoji ? (
+            <span>{chosenEmoji}</span>
+          ) : (
+            <span style={{color: '#525252'}} >Choose the category</span>
+          )}
+            <Button onClick={showPicker} variant="contained" size="small" style={{ marginLeft: '5px', color: "#2575fc", borderColor: "#2575fc" }}>
+              Choose
+            </Button>
+          </Typography>
+        </div>
         <Button
           type="submit"
           variant="outlined"
@@ -147,8 +185,20 @@ const MakeRoom: React.FC = () => {
           Make new room
         </Button>
       </form>
+      <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
+              <DialogContent
+                style={{
+                  width: 300,
+                  height: 300,
+                  overflow: "hidden",
+                }}
+              >
+                <Picker onEmojiClick={onEmojiClick} />
+              </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
 export default MakeRoom;
+

@@ -5745,6 +5745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"emoji-picker-react@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "emoji-picker-react@npm:3.2.1"
+  checksum: 3/3c0c7aeed2797a26ac1975816e01932715a3347c78e5a0aadded7c2581f1e222c61274a365ca065ec7858a3e859283787ad21f92297842f06e7c03f6851637f1
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^7.0.1, emoji-regex@npm:^7.0.2":
   version: 7.0.3
   resolution: "emoji-regex@npm:7.0.3"
@@ -6279,6 +6286,7 @@ __metadata:
     d3-drag: ^1.2.5
     d3-force: ^2.0.1
     d3-selection: ^1.4.1
+    emoji-picker-react: ^3.2.1
     husky: ^4.2.5
     node-emoji: ^1.10.0
     node-sass: ^4.14.1
