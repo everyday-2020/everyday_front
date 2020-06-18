@@ -6,7 +6,8 @@ import styles from "./roomList.module.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
-import { getUser, getRooms } from "../api";
+import { getUser, getRooms, postLogout } from "../api";
+import Footer from "../components/footer";
 
 interface RoomListProps {}
 
@@ -22,6 +23,9 @@ const RoomList: FC<RoomListProps> = () => {
     getUser().then((userInfo) => {
       setUser(userInfo);
     });
+  };
+  const logout = () => {
+    postLogout();
   };
   useEffect(() => {
     fetchRooms();
@@ -50,6 +54,7 @@ const RoomList: FC<RoomListProps> = () => {
           <RoomCard room={room} key={room.id} />
         ))}
       </div>
+      <Footer logout={logout}></Footer>
     </div>
   );
 };

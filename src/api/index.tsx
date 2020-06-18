@@ -4,6 +4,7 @@ import { RoomEntity, UserEntity, VideoEntity } from "../types/entities";
 export const baseURL = "http://localhost:3000";
 
 const loginUrl = `/login`;
+const logoutUrl = `/logout`;
 const usersUrl = `/users`;
 const userUrl = `/user`;
 const roomUrl = `/rooms`;
@@ -87,4 +88,8 @@ export async function postVideo(inviteCode: string, clip: File) {
 
 export async function getVideo(id: number) {
   return instance.get(`${videoUrl}/${id}`);
+}
+
+export async function postLogout() {
+  return instance.post(logoutUrl);
 }
