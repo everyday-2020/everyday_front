@@ -2199,6 +2199,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.155":
+  version: 4.14.155
+  resolution: "@types/lodash@npm:4.14.155"
+  checksum: 3/e3fa52de94757a765761b3b5f0e483aa61de985b75f7d4a55e6f6b79c31b7cbba0e2e91eec14b38fe66b82f5cd79dd83a54069a0e5491a1c7126e01b143a0a29
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*, @types/minimatch@npm:^3.0.3":
   version: 3.0.3
   resolution: "@types/minimatch@npm:3.0.3"
@@ -6276,6 +6283,7 @@ __metadata:
     "@types/d3-force": ^1.2.1
     "@types/d3-selection": ^1.4.1
     "@types/jest": ^25.2.2
+    "@types/lodash": ^4.14.155
     "@types/node": ^14.0.1
     "@types/node-emoji": ^1.8.1
     "@types/react": ^16.9.35
@@ -6288,6 +6296,7 @@ __metadata:
     d3-selection: ^1.4.1
     emoji-picker-react: ^3.2.1
     husky: ^4.2.5
+    lodash: ^4.17.15
     node-emoji: ^1.10.0
     node-sass: ^4.14.1
     prettier: ^2.0.5

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RoomEntity, UserEntity } from "../types/entities";
+import { RoomEntity, UserEntity, VideoEntity } from "../types/entities";
 
 const baseURL = "http://localhost:3000";
 
@@ -7,6 +7,7 @@ const loginUrl = `/login`;
 const usersUrl = `/users`;
 const userUrl = `/user`;
 const roomUrl = `/rooms`;
+const videoUrl = `/videos`;
 
 export const instance = axios.create({
   baseURL,
@@ -85,4 +86,16 @@ export function makeRoom(makeRoomForm: MakeRoomForm) {
 
 export async function getRooms() {
   return instance.get<RoomEntity[]>(roomUrl).then((response) => response.data);
+}
+
+export async function getVideos(
+  inviteCode: string,
+  date_start?: string,
+  date_end?: string
+) {
+  return instance
+    .get<VideoEntity[]>(`${videoUrl}/${inviteCode}`, {
+      params: { date_start, date_end },
+    })
+    .then((response) => response.data);
 }

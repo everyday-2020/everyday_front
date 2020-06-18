@@ -25,7 +25,7 @@ function RoutedApp() {
       <Route path="/signin">
         <Login />
       </Route>
-      <Route path="/room">
+      <Route path="/room/:inviteCode">
         <Room />
       </Route>
       <Route path="/makeroom">
