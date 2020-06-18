@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { RoomEntity } from "../types/entities";
 import BigEmoji from "./bigEmoji";
-import "./roomCard.scss";
+import styles from "../containers/roomList.module.scss";
 import { useHistory } from "react-router-dom";
 
 interface RoomCardProps {
@@ -13,7 +13,11 @@ const RoomCard: FC<RoomCardProps> = ({ room }) => {
   const history = useHistory();
   return (
     <div
-      className={`rooms-card ${isCompleted && "completed"}`}
+      className={[
+        styles.roomcard,
+        isCompleted ? styles.completed : "",
+        room.invite_code === "create" ? styles.create : "",
+      ].join(" ")}
       onClick={() => {
         history.push(`/room/${room.invite_code}`);
       }}
@@ -23,7 +27,8 @@ const RoomCard: FC<RoomCardProps> = ({ room }) => {
         <div style={{ flex: 0, marginTop: "auto" }}>
           {room.description}
           <br />
-          {new Date(room.complete_at).toLocaleDateString()}
+          {room.complete_at !== "" &&
+            new Date(room.complete_at).toLocaleDateString()}
         </div>
       </div>
       <BigEmoji

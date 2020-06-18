@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 
 import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
-import "./roomList.scss";
+import styles from "./roomList.module.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
@@ -23,12 +23,24 @@ const RoomList: FC<RoomListProps> = () => {
     })();
   }, []);
   return (
-    <div className="rooms-root">
+    <div className={styles["root"]}>
       <LogoBar></LogoBar>
-      <div className="rooms-header">
+      <div className={styles.header}>
         <UserProfile user={userInfo} />
       </div>
-      <div className="rooms-list">
+      <div className={styles.list}>
+        <RoomCard
+          room={{
+            title: "새 방 만들기",
+            description: "",
+            complete_at: "",
+            category: "heavy_plus_sign",
+            id: 0,
+            created_at: "",
+            modified_at: "",
+            invite_code: "create",
+          }}
+        />
         {rooms.map((room) => (
           <RoomCard room={room} key={room.id} />
         ))}
