@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
+import { configure } from "axios-hooks";
 
 import "./App.scss";
 import Login from "./containers/login";
@@ -16,13 +17,15 @@ function RoutedApp() {
     (error) => {
       if (error.response?.status === 401) {
         history.push(`/signin?redirect=${history.location.pathname}`);
-      } else {
-        console.log({ ...error });
-        alert(error.toString());
+      } else if (error.response) {
+        console.log(error);
+        alert(error.response.body?.join(" ") || "Failed");
       }
       return Promise.reject(error);
     }
   );
+  configure({ axios: instance });
+
   return (
     <Switch>
       <Route path="/signin">

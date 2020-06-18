@@ -1,36 +1,21 @@
 import React, { FC, useState, useEffect } from "react";
 
-import { RoomEntity, UserEntity } from "../types/entities";
 import { roomsMock, userMock } from "../mocks/rooms";
 import styles from "./roomList.module.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
-import { getUser, getRooms, postLogout } from "../api";
+import { postLogout, useGetUser, useGetRooms } from "../api";
 import Footer from "../components/footer";
 
 interface RoomListProps {}
 
 const RoomList: FC<RoomListProps> = () => {
-  const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
-  const [userInfo, setUser] = useState<UserEntity>(userMock);
-  const fetchRooms = () => {
-    getRooms().then((rooms) => {
-      setRooms(rooms);
-    });
-  };
-  const fetchUserInfo = () => {
-    getUser().then((userInfo) => {
-      setUser(userInfo);
-    });
-  };
+  const [{ data: rooms = roomsMock }, refetchRooms] = useGetRooms();
+  const [{ data: userInfo = userMock }] = useGetUser();
   const logout = () => {
     postLogout();
   };
-  useEffect(() => {
-    fetchRooms();
-    fetchUserInfo();
-  }, []);
   return (
     <div className={styles["root"]}>
       <LogoBar></LogoBar>
