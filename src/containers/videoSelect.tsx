@@ -29,9 +29,8 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
   };
   const onVideoSubmit = () => {
     if (video) {
-      postVideo(inviteCode, video).then(() => {
-        setOpen(false);
-      });
+      setOpen(false);
+      postVideo(inviteCode, video);
     }
   };
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { RoomEntity, UserEntity, VideoEntity } from "../types/entities";
 
-const baseURL = "http://localhost:3000";
+export const baseURL = "http://localhost:3000";
 
 const loginUrl = `/login`;
 const usersUrl = `/users`;
@@ -73,10 +73,11 @@ export async function getVideos(
 }
 
 export function patchRoom() {
-  const roomcode = window.location.href.split('/')[4];
-  const joinRoomUrl = roomUrl.concat('/', roomcode);
-  instance.patch(joinRoomUrl).then((response) => {alert("Join in this room successfully.")})
-
+  const roomcode = window.location.href.split("/")[4];
+  const joinRoomUrl = roomUrl.concat("/", roomcode);
+  instance.patch(joinRoomUrl).then((response) => {
+    alert("Join in this room successfully.");
+  });
 }
 export async function postVideo(inviteCode: string, clip: File) {
   const data = new FormData();

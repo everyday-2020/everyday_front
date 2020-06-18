@@ -95,15 +95,10 @@ export default function SignIn() {
 
   const confirmSignIn = (e: any) => {
     e.preventDefault();
-    
-    login(signInForm)
-      .then(() => {
-        history.push(redirect || "/");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Login Failed");
-      });
+
+    login(signInForm).then(() => {
+      history.push(redirect || "/");
+    });
     setForm({
       username: "",
       password: "",
