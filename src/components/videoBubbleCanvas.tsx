@@ -1,4 +1,11 @@
-import React, { FC, useRef, useEffect, Dispatch, SetStateAction } from "react";
+import React, {
+  FC,
+  useRef,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+} from "react";
 import { select, event } from "d3-selection";
 import {
   forceSimulation,
@@ -35,11 +42,12 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
     return 16 * (Math.log(clicks + 1) + 1);
   };
   const radiuses = videos.map(({ clicks }) => radius(clicks));
-  useEffect(() => {
+
+  const createGraph = useCallback(() => {
     const { width: rootWidth = 0, height: rootHeight = 0 } =
       svgRef.current?.getBoundingClientRect() || {};
 
-    let simulation = forceSimulation<Datum>(videos)
+    const simulation = forceSimulation<Datum>(videos)
       .alphaMin(0.1)
       .force("charge", forceManyBody().strength(-2))
       .force("center", forceCenter(rootWidth / 2, rootHeight / 2))
@@ -132,7 +140,14 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
         .attr("y", ({ y = 0 }, i) => radiuses[i] + y + FONT_SIZE);
     };
     simulation.on("tick", tick);
-  }, []);
+  }, [videos]);
+
+  useEffect(() => {
+    select(svgRef.current).selectAll("mask").remove();
+    select(svgRef.current).selectAll("g").remove();
+    createGraph();
+  }, [videos]);
+
   return (
     <svg
       ref={svgRef}
