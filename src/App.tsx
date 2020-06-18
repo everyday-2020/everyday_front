@@ -24,7 +24,7 @@ function RoutedApp() {
       return Promise.reject(error);
     }
   );
-  configure({ axios: instance });
+  configure({ cache: false, axios: instance });
 
   return (
     <Switch>
