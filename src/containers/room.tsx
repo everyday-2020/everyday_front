@@ -9,19 +9,23 @@ import VideoSelect from "./videoSelect";
 import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
-import { getVideo, postVideo, useGetVideos, patchRoom } from "../api";
+import { getVideo, postVideo, useGetVideos, patchRoom, getRoom } from "../api";
 
 const Room: React.FC = () => {
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
   const [{ data: videos, error }, refetchVideos] = useGetVideos(inviteCode);
   if (error?.response?.status === 403) {
-    if (window.confirm("Do you want to join in this room?")) {
-      patchRoom(inviteCode).then(() => {
-        refetchVideos();
-      });
-    }
-  }
+    getRoom(inviteCode).catch((error) => {
+      const response = {...error};
+      const roomTitle = response.response.data.title;
+      if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`) == true) {
+        patchRoom(inviteCode).then(() => {
+          refetchVideos();
+        });
+      };
+    });
+  };
   const dates = groupBy(videos, (video) =>
     new Date(video.created_at).toDateString()
   );

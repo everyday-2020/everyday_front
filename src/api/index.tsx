@@ -95,6 +95,11 @@ export function useGetVideos(
 export async function patchRoom(inviteCode: string) {
   return instance.patch(`${roomUrl}/${inviteCode}`);
 }
+
+export async function getRoom(inviteCode: string) {
+  return instance.get<RoomEntity>(`${roomUrl}/${inviteCode}`);
+}
+
 export async function postVideo(inviteCode: string, clip: File) {
   const data = new FormData();
   data.append("clip", clip);
