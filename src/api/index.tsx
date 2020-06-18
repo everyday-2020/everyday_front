@@ -33,55 +33,26 @@ interface MakeRoomForm {
   category: string;
 }
 
-export function login(signInForm: SignInForm) {
-  instance
-    .post(loginUrl, {
-      user: signInForm,
-    })
-    .then((response) => {
-      console.log(response);
-      alert("Login Success");
-      window.location.href = "/";
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Login Failed");
-      window.location.href = "/signin";
-    });
+export async function login(signInForm: SignInForm) {
+  return instance.post(loginUrl, {
+    user: signInForm,
+  });
 }
 
 export async function getUser() {
   return instance.get<UserEntity>(userUrl).then((response) => response.data);
 }
 
-export function signup(signUpForm: SignUpForm) {
-  instance
-    .post(usersUrl, {
-      user: signUpForm,
-    })
-    .then((response) => {
-      alert("Sign Up Success");
-      console.log(response);
-      window.location.href = "/signin";
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Failed");
-    });
+export async function signup(signUpForm: SignUpForm) {
+  return instance.post(usersUrl, {
+    user: signUpForm,
+  });
 }
 
-export function makeRoom(makeRoomForm: MakeRoomForm) {
-  instance
-    .post(roomUrl, {
-      room: makeRoomForm,
-    })
-    .then((response) => {
-      alert("New Room is created");
-      window.location.href = "/";
-    })
-    .catch((error) => {
-      alert("Failed");
-    });
+export async function makeRoom(makeRoomForm: MakeRoomForm) {
+  return instance.post(roomUrl, {
+    room: makeRoomForm,
+  });
 }
 
 export async function getRooms() {

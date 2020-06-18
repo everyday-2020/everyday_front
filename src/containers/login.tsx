@@ -3,10 +3,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { login } from "../api";
-//import FormControlLabel from "@material-ui/core/FormControlLabel";
-//import Checkbox from "@material-ui/core/Checkbox";
-//import Link from "@material-ui/core/Link";
-//import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router-dom";
 import {
   makeStyles,
   createMuiTheme,
@@ -80,6 +77,7 @@ export default function SignIn() {
   const classes = useStyles();
   const button_classes = buttonStyles();
   const tf_classes = tfStyles();
+  const history = useHistory();
 
   const [signInForm, setForm] = useState<SignInForm>({
     username: "",
@@ -88,13 +86,20 @@ export default function SignIn() {
 
   const signUpPage = (e: any) => {
     e.preventDefault();
-    window.location.href = "/signup";
+    history.push("/signup");
   };
 
   const confirmSignIn = (e: any) => {
     e.preventDefault();
 
-    login(signInForm);
+    login(signInForm)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Login Failed");
+      });
 
     setForm({
       username: "",

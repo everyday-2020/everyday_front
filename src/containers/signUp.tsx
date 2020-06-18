@@ -16,6 +16,7 @@ import {
 import { signup } from "../api";
 import Picker from "emoji-picker-react";
 import BigEmoji from "../components/bigEmoji";
+import { useHistory } from "react-router-dom";
 
 interface SignUpForm {
   username: string;
@@ -96,8 +97,7 @@ export default function SignUp() {
     password: "",
     profile_pic: "",
   });
-
-  //const { username, nickname, password, profile_pic } = signUpForm;
+  const history = useHistory();
 
   const [chosenEmoji, setChosenEmoji] = useState(null);
 
@@ -116,7 +116,14 @@ export default function SignUp() {
   const confirmSignUp = (e: any) => {
     e.preventDefault();
 
-    signup(signUpForm);
+    signup(signUpForm)
+      .then(() => {
+        history.push("/signin");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Failed");
+      });
 
     setForm({
       username: "",

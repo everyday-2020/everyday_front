@@ -8,10 +8,12 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
+import { useHistory } from "react-router-dom";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 
 export default function VideoSelect() {
   const [videoURL, setVideo] = useState("");
+  const history = useHistory();
   const onVideoChange = (e: any) => {
     e.preventDefault();
     setVideo(URL.createObjectURL(e.target.files[0]));
@@ -48,7 +50,9 @@ export default function VideoSelect() {
             </DialogContent>
             <DialogActions style={{ justifyContent: "center" }}>
               <Button
-                onClick={() => (window.location.href = "/room")}
+                onClick={() => {
+                  history.push("/room");
+                }}
                 variant="outlined"
                 style={{
                   backgroundColor: "#2575fc",

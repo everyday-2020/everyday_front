@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { makeRoom } from "../api";
 import Picker from "emoji-picker-react";
+import { useHistory } from "react-router-dom";
 
 interface MakeRoomForm {
   title: string;
@@ -46,7 +47,7 @@ const MakeRoom: React.FC = () => {
   });
 
   const [chosenEmoji, setChosenEmoji] = useState(null);
-
+  const history = useHistory();
   //dialog
   const [open, setOpen] = useState(false);
 
@@ -64,7 +65,13 @@ const MakeRoom: React.FC = () => {
   const confirmRoom = async (e: any) => {
     e.preventDefault();
 
-    makeRoom(makeRoomForm);
+    makeRoom(makeRoomForm)
+      .then((response) => {
+        history.push("/");
+      })
+      .catch((error) => {
+        alert("Failed");
+      });
     console.log(makeRoomForm);
     setForm({
       title: "",
