@@ -91,7 +91,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       .append("image")
       .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
       .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
-      .attr("xlink:href", (d) => d.thumbnail)
+      .attr("xlink:href", (d) => d.clip.thumb.url)
       .on("click", (d) => {
         playVideo(d);
       })

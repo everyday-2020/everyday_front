@@ -18,10 +18,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ video, playVideo }) => {
         alignItems: "center",
         backgroundColor: "#000000cc",
       }}
-      onClick={() => playVideo(undefined)}
+      onClick={() => playVideo(video)}
     >
       <video controls style={{ width: "100vw" }}>
-        <source src={video.location} />
+        <source src={video.clip.url} />
       </video>
     </div>
   );
