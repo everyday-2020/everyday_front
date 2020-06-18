@@ -6,8 +6,6 @@ interface Entity {
 
 export interface VideoEntity extends Entity {
   clicks: number;
-  length: number;
-  user: UserEntity;
   clip: {
     url: string;
     thumb: {
