@@ -79,7 +79,7 @@ export default function SignIn() {
   const button_classes = buttonStyles();
   const tf_classes = tfStyles();
   const history = useHistory();
-  const { redirect } = queryString.parse(history.location.search, {
+  const { redirect = "/" } = queryString.parse(history.location.search, {
     decode: false,
   });
 
@@ -97,7 +97,7 @@ export default function SignIn() {
     e.preventDefault();
 
     login(signInForm).then(() => {
-      history.push(redirect || "/");
+      history.push(redirect);
     });
     setForm({
       username: "",
