@@ -75,7 +75,7 @@ export async function getVideos(
 export function patchRoom() {
   const roomcode = window.location.href.split('/')[4];
   const joinRoomUrl = roomUrl.concat('/', roomcode);
-  return instance.patch(joinRoomUrl)
+  instance.patch(joinRoomUrl).then((response) => {alert("Join in this room successfully.")})
 
 }
 export async function postVideo(inviteCode: string, clip: File) {

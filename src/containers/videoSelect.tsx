@@ -8,13 +8,12 @@ import {
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import { postVideo } from "../api";
 
 interface VideoSelectProps {
-  inviteCode: string;
+  onVideoSubmit: (video: File) => void;
 }
 
-const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
+const VideoSelect: FC<VideoSelectProps> = ({ onVideoSubmit }) => {
   const [videoURL, setVideoUrl] = useState("");
   const [video, setVideo] = useState<File>();
   const [open, setOpen] = useState(false);
@@ -26,13 +25,6 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
       setVideo(e.target.files[0]);
     }
     setOpen(true);
-  };
-  const onVideoSubmit = () => {
-    if (video) {
-      postVideo(inviteCode, video).then(() => {
-        setOpen(false);
-      });
-    }
   };
 
   return (
@@ -82,7 +74,12 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={onVideoSubmit}
+            onClick={() => {
+              if (video) {
+                onVideoSubmit(video);
+              }
+              setOpen(false);
+            }}
             style={{
               backgroundColor: "#2575fc",
               color: "#ffffff",

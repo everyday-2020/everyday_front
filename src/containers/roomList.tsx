@@ -6,21 +6,30 @@ import styles from "./roomList.module.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
 import RoomCard from "../components/roomCard";
-import { getUser, getRooms } from "../api";
+import { getUser, getRooms, postLogout } from "../api";
+import Footer from "../components/footer";
 
 interface RoomListProps {}
 
 const RoomList: FC<RoomListProps> = () => {
   const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [userInfo, setUser] = useState<UserEntity>(userMock);
-
-  useEffect(() => {
-    (async () => {
-      const rooms = await getRooms();
+  const fetchRooms = () => {
+    getRooms().then((rooms) => {
       setRooms(rooms);
-      const userInfo = await getUser();
+    });
+  };
+  const fetchUserInfo = () => {
+    getUser().then((userInfo) => {
       setUser(userInfo);
-    })();
+    });
+  };
+  const logout = () => {
+    postLogout();
+  };
+  useEffect(() => {
+    fetchRooms();
+    fetchUserInfo();
   }, []);
   return (
     <div className={styles["root"]}>
@@ -45,6 +54,7 @@ const RoomList: FC<RoomListProps> = () => {
           <RoomCard room={room} key={room.id} />
         ))}
       </div>
+      <Footer logout={logout}></Footer>
     </div>
   );
 };

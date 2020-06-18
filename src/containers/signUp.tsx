@@ -120,14 +120,9 @@ export default function SignUp() {
   const confirmSignUp = (e: any) => {
     e.preventDefault();
 
-    signup(signUpForm)
-      .then(() => {
-        history.push(`/signin?redirect=${redirect}`);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Failed");
-      });
+    signup(signUpForm).then(() => {
+      history.push(`/signin?redirect=${redirect}`);
+    });
 
     setForm({
       username: "",

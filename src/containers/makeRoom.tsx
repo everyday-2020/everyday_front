@@ -65,13 +65,9 @@ const MakeRoom: React.FC = () => {
   const confirmRoom = async (e: any) => {
     e.preventDefault();
 
-    makeRoom(makeRoomForm)
-      .then((response) => {
-        history.push("/");
-      })
-      .catch((error) => {
-        alert("Failed");
-      });
+    makeRoom(makeRoomForm).then((response) => {
+      history.push("/");
+    });
     console.log(makeRoomForm);
     setForm({
       title: "",
