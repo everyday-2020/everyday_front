@@ -18,7 +18,9 @@ function RoutedApp() {
         history.push(`/signin?redirect=${history.location.pathname}`);
       } else {
         console.log({ ...error });
-        alert(error.toString());
+        if (error.response?.status !== 403){
+          alert(error.toString());
+        }
       }
       return Promise.reject(error);
     }
