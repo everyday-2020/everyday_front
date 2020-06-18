@@ -99,6 +99,12 @@ export async function patchRoom(inviteCode: string) {
 export async function getRoom(inviteCode: string) {
   return instance.get<RoomEntity>(`${roomUrl}/${inviteCode}`);
 }
+export function useGetRoom(inviteCode: string) {
+  return useAxios<RoomEntity>({
+    url: `${roomUrl}/${inviteCode}`,
+    method: "GET",
+  });
+}
 
 export async function postVideo(inviteCode: string, clip: File) {
   const data = new FormData();
