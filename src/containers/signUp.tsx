@@ -99,7 +99,9 @@ export default function SignUp() {
     profile_pic: "",
   });
   const history = useHistory();
-  const { redirect } = queryString.parse(history.location.search);
+  const { redirect } = queryString.parse(history.location.search, {
+    decode: false,
+  });
 
   const [chosenEmoji, setChosenEmoji] = useState(null);
 

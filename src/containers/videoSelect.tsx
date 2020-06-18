@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
-import { useHistory } from "react-router-dom";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import { postVideo } from "../api";
 
@@ -19,8 +18,6 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
   const [videoURL, setVideoUrl] = useState("");
   const [video, setVideo] = useState<File>();
   const [open, setOpen] = useState(false);
-
-  const history = useHistory();
 
   const onVideoChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -34,7 +31,6 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
     if (video) {
       postVideo(inviteCode, video).then(() => {
         setOpen(false);
-        history.push(".");
       });
     }
   };
@@ -79,6 +75,7 @@ const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
             overflow: "hidden",
             padding: 0,
             alignSelf: "center",
+            maxHeight: "320px",
           }}
         >
           <VideoThumbnail videoUrl={videoURL} />
