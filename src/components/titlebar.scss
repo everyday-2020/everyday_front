@@ -1,0 +1,27 @@
+@import '../App.scss';
+
+.titlebar {
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  height: 56px;
+  background: $blue;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.title {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+#right {
+    flex: 0 1;
+    height: 10px;
+    width: 50px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
