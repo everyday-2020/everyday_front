@@ -10,14 +10,12 @@ import VideoPlayer from "../components/videoPlayer";
 import ShareRoom from "../components/shareRoom";
 import { RoomEntity } from "../types/entities";
 import { getUser, patchRoom, getRooms } from "../api";
-
-import { Button, Dialog, DialogTitle, DialogActions } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core"
 import { roomsMock } from "../mocks/rooms";
 
 const Room: React.FC = () => {
   const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [playingVideo, playVideo] = useState<VideoEntity>();
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -28,16 +26,7 @@ const Room: React.FC = () => {
     })();
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-  }
-
-  const joinRoom = (e:any) => {
-    e.preventDefault();
-    patchRoom(rooms);
-  }
-
-  function checkRooms(rooms: RoomEntity[]) {
+  const checkRooms = (rooms: RoomEntity[]) => {
     const roomcode = window.location.href.split('/')[4];
     console.log("checkRooms");
     //user의 room 가입여부 확인
@@ -45,12 +34,18 @@ const Room: React.FC = () => {
       console.log("already join");
     }
     else{
-      console.log("alert dialog");
-      //console.log(rooms);
-      patchRoom(rooms);
-      //setOpen(true);
-      //handleClose();
+      setOpen(true);
     }
+  }
+
+  const [open, setOpen] = useState(false);
+  
+  const handleClickYes = () => {
+    patchRoom(rooms)
+    handleClose();
+  }
+  const handleClose = () => {
+    setOpen(false);
   }
   return (
     <>
@@ -60,6 +55,15 @@ const Room: React.FC = () => {
       >
         <LogoBar />
         <ShareRoom/>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>
+            {"join in this room?"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={handleClickYes}>Yes</Button>
+            <Button onClick={handleClose}>No</Button>
+          </DialogActions>
+        </Dialog>
         <DateBoard
           date={new Date(2020, 4, 22)}
           videos={vids}
@@ -85,16 +89,3 @@ const Room: React.FC = () => {
 };
 
 export default Room;
-
-/**
- *         <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>{"Do you want to join in this room?"}</DialogTitle>
-        <DialogActions>
-          <Button onClick={joinRoom}>Yes</Button>
-          <Button onClick={handleClose}>No</Button>
-        </DialogActions>
-      </Dialog>
- */
