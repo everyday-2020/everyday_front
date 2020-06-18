@@ -3,8 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 
 import DateBoard from "../components/dateboard";
-import LogoBar from "../components/logobar";
-import ShareRoom from "../components/shareRoom";
+import TitleBar from "../components/titlebar"
 import VideoSelect from "./videoSelect";
 import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
@@ -16,11 +15,13 @@ const Room: React.FC = () => {
   const { inviteCode } = useParams();
   const history = useHistory();
   const [{ data: videos, error }, refetchVideos] = useGetVideos(inviteCode);
+  const [roomTitle, setRoomTitle] = useState<string>('');
   useEffect(() => {
     if (error?.response?.status === 403) {
       getRoom(inviteCode).catch((error) => {
         const response = { ...error };
         const roomTitle = response.response.data.title;
+        setRoomTitle(roomTitle);
         if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`)) {
           patchRoom(inviteCode).then(() => {
             refetchVideos();
@@ -30,9 +31,14 @@ const Room: React.FC = () => {
         }
       });
     }
-  }, [error]);
+    else{
+      getRoom(inviteCode).then((response) => {
+        setRoomTitle(response.data.title);
+      })
+    }
+  }, []);
   const dates = groupBy(videos, (video) =>
-    new Date(video.created_at).toDateString()
+    new Date(video.created_at).toISOString().substr(0, 10)
   );
 
   const onVideoSubmit = (video: File) => {
@@ -45,12 +51,11 @@ const Room: React.FC = () => {
     <>
       <div className={styles.content}>
         <div
-          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+          style={{ display: "flex", flexDirection: "column", }}
         >
-          <LogoBar />
-          <ShareRoom />
+          <TitleBar title={roomTitle}/>
           {Object.keys(dates)
-            .sort()
+            .sort().reverse()
             .map((date) => {
               return (
                 <DateBoard
@@ -68,12 +73,12 @@ const Room: React.FC = () => {
                 />
               );
             })}
-          <VideoSelect onVideoSubmit={onVideoSubmit} />
         </div>
-      </div>
       {playingVideo && (
         <VideoPlayer video={playingVideo} playVideo={playVideo} />
       )}
+      </div>
+          <VideoSelect onVideoSubmit={onVideoSubmit} />
     </>
   );
 };
