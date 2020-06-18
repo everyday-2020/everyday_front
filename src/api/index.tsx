@@ -97,7 +97,6 @@ export async function patchRoom(inviteCode: string) {
 }
 
 export async function getRoom(inviteCode: string) {
-  //console.log(inviteCode);
   return instance.get<RoomEntity>(`${roomUrl}/${inviteCode}`);
 }
 
