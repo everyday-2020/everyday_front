@@ -6,10 +6,10 @@ import DateBoard from "../components/dateboard";
 import LogoBar from "../components/logobar";
 import ShareRoom from "../components/shareRoom";
 import VideoSelect from "./videoSelect";
-import { VideoEntity } from "../types/entities";
+import { VideoEntity, RoomEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
-import { getVideo, postVideo, useGetVideos, patchRoom } from "../api";
+import { getVideos, patchRoom, getRoom, getVideo, postVideo } from "../api";
 
 const Room: React.FC = () => {
   const [playingVideo, playVideo] = useState<VideoEntity>();
@@ -20,6 +20,24 @@ const Room: React.FC = () => {
       patchRoom(inviteCode).then(() => {
         refetchVideos();
       });
+      /*
+      getRoom(inviteCode)
+      .catch((error) => {
+        const response = {...error};
+        console.log(response);
+        console.log(response.data)
+      })
+      
+      .catch((error) => {
+        if(error.response?.status === 403){
+          console.log("room", room);
+          if(room!=undefined && window.confirm(`${room.title} 방에 정말 참여하시겠습니까?`)){
+            patchRoom(inviteCode);
+            return;
+          }
+        }
+      });
+      */
     }
   }
   const dates = groupBy(videos, (video) =>
