@@ -85,3 +85,16 @@ const Room: React.FC = () => {
 };
 
 export default Room;
+
+/**
+ *         <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>{"Do you want to join in this room?"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={joinRoom}>Yes</Button>
+          <Button onClick={handleClose}>No</Button>
+        </DialogActions>
+      </Dialog>
+ */

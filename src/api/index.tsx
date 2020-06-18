@@ -109,6 +109,6 @@ export async function getRooms() {
 export function patchRoom(rooms: RoomEntity[]) {
   const roomcode = window.location.href.split('/')[4];
   const joinRoomUrl = roomUrl.concat('/', roomcode);
-  instance.patch(joinRoomUrl);
+  instance.patch(joinRoomUrl).then((response) => {alert("Join in this room successfully.")})
 
 }
