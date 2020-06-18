@@ -3,40 +3,41 @@ import { useParams, useHistory } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 
 import DateBoard from "../components/dateboard";
-import TitleBar from "../components/titlebar"
+import TitleBar from "../components/titlebar";
 import VideoSelect from "./videoSelect";
 import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
-import { getVideo, postVideo, useGetVideos, patchRoom, getRoom } from "../api";
+import {
+  getVideo,
+  postVideo,
+  useGetVideos,
+  patchRoom,
+  useGetRoom,
+} from "../api";
 
 const Room: React.FC = () => {
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
   const history = useHistory();
   const [{ data: videos, error }, refetchVideos] = useGetVideos(inviteCode);
-  const [roomTitle, setRoomTitle] = useState<string>('');
+  const [
+    { data: roomInfo, error: roomError, loading },
+    refetchRoom,
+  ] = useGetRoom(inviteCode);
   useEffect(() => {
-    if (error?.response?.status === 403) {
-      getRoom(inviteCode).catch((error) => {
-        const response = { ...error };
-        const roomTitle = response.response.data.title;
-        setRoomTitle(roomTitle);
-        if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`)) {
-          patchRoom(inviteCode).then(() => {
-            refetchVideos();
-          });
-        } else {
-          history.push("/rooms");
-        }
-      });
+    if (roomError?.response?.status === 403) {
+      const roomTitle = roomError?.response?.data?.title;
+      if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`)) {
+        patchRoom(inviteCode).then(() => {
+          refetchVideos();
+          refetchRoom();
+        });
+      } else {
+        history.push("/rooms");
+      }
     }
-    else{
-      getRoom(inviteCode).then((response) => {
-        setRoomTitle(response.data.title);
-      })
-    }
-  }, []);
+  }, [loading]);
   const dates = groupBy(videos, (video) =>
     new Date(video.created_at).toISOString().substr(0, 10)
   );
@@ -50,12 +51,11 @@ const Room: React.FC = () => {
   return (
     <>
       <div className={styles.content}>
-        <div
-          style={{ display: "flex", flexDirection: "column", }}
-        >
-          <TitleBar title={roomTitle}/>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <TitleBar title={roomInfo?.title} />
           {Object.keys(dates)
-            .sort().reverse()
+            .sort()
+            .reverse()
             .map((date) => {
               return (
                 <DateBoard
@@ -74,11 +74,11 @@ const Room: React.FC = () => {
               );
             })}
         </div>
-      {playingVideo && (
-        <VideoPlayer video={playingVideo} playVideo={playVideo} />
-      )}
+        {playingVideo && (
+          <VideoPlayer video={playingVideo} playVideo={playVideo} />
+        )}
       </div>
-          <VideoSelect onVideoSubmit={onVideoSubmit} />
+      <VideoSelect onVideoSubmit={onVideoSubmit} />
     </>
   );
 };
