@@ -92,12 +92,8 @@ export function useGetVideos(
   });
 }
 
-export function patchRoom() {
-  const roomcode = window.location.href.split("/")[4];
-  const joinRoomUrl = roomUrl.concat("/", roomcode);
-  instance.patch(joinRoomUrl).then((response) => {
-    alert("Join in this room successfully.");
-  });
+export async function patchRoom(inviteCode: string) {
+  return instance.patch(`${roomUrl}/${inviteCode}`);
 }
 export async function postVideo(inviteCode: string, clip: File) {
   const data = new FormData();

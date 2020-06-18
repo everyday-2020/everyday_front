@@ -4,16 +4,24 @@ import groupBy from "lodash/groupBy";
 
 import DateBoard from "../components/dateboard";
 import LogoBar from "../components/logobar";
+import ShareRoom from "../components/shareRoom";
 import VideoSelect from "./videoSelect";
 import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
-import { getVideo, postVideo, useGetVideos } from "../api";
+import { getVideo, postVideo, useGetVideos, patchRoom } from "../api";
 
 const Room: React.FC = () => {
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
-  const [{ data: videos }, refetchVideos] = useGetVideos(inviteCode);
+  const [{ data: videos, error }, refetchVideos] = useGetVideos(inviteCode);
+  if (error?.response?.status === 403) {
+    if (window.confirm("Do you want to join in this room?")) {
+      patchRoom(inviteCode).then(() => {
+        refetchVideos();
+      });
+    }
+  }
   const dates = groupBy(videos, (video) =>
     new Date(video.created_at).toDateString()
   );
@@ -31,6 +39,7 @@ const Room: React.FC = () => {
           style={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
           <LogoBar />
+          <ShareRoom />
           {Object.keys(dates)
             .sort()
             .map((date) => {

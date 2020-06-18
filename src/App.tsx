@@ -17,7 +17,7 @@ function RoutedApp() {
     (error) => {
       if (error.response?.status === 401) {
         history.push(`/signin?redirect=${history.location.pathname}`);
-      } else if (error.response) {
+      } else if (error.response && error.response?.status !== 403) {
         console.log(error);
         alert(error.response.body?.join(" ") || "Failed");
       }
