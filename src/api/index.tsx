@@ -1,4 +1,5 @@
 import axios from "axios";
+import useAxios, { configure } from "axios-hooks";
 import { RoomEntity, UserEntity, VideoEntity } from "../types/entities";
 
 export const baseURL = "http://localhost:3000";
@@ -15,6 +16,8 @@ export const instance = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+configure({ axios: instance });
 
 interface SignInForm {
   username: string;
@@ -41,6 +44,13 @@ export async function login(signInForm: SignInForm) {
   });
 }
 
+export function useLogin(signInForm: SignInForm) {
+  return useAxios({ url: loginUrl, method: "GET", data: signInForm });
+}
+
+export function useGetUser() {
+  return useAxios<UserEntity>({ url: userUrl, method: "GET" });
+}
 export async function getUser() {
   return instance.get<UserEntity>(userUrl).then((response) => response.data);
 }
@@ -71,6 +81,17 @@ export async function getVideos(
       params: { date_start, date_end },
     })
     .then((response) => response.data);
+}
+export function useGetVideos(
+  inviteCode: string,
+  date_start?: string,
+  date_end?: string
+) {
+  return useAxios<VideoEntity[]>({
+    url: `${videosUrl}/${inviteCode}`,
+    method: "GET",
+    params: { date_end, date_start },
+  });
 }
 
 export function patchRoom() {

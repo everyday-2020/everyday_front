@@ -1324,6 +1324,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:7.9.2":
+  version: 7.9.2
+  resolution: "@babel/runtime@npm:7.9.2"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 3/50c65b4972e62ca260ff6f3f99cf2395585d7f7bcd947ee87d082c2926cb4f0c93c815d5e9071162e689a4d2ba4143ffd5b005893be860088689c963f34e50c8
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.4, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.9.2, @babel/runtime@npm:^7.9.6":
   version: 7.9.6
   resolution: "@babel/runtime@npm:7.9.6"
@@ -3349,6 +3358,19 @@ __metadata:
   version: 1.9.1
   resolution: "aws4@npm:1.9.1"
   checksum: 3/d59822631844f9da1caf966cfab90ffafa22cc6c50835f9f5ebff83acdbcffc24eca44fa50d4aa191a6cee81747df38b9880547cc1df8a1380c80dd507b8e6ce
+  languageName: node
+  linkType: hard
+
+"axios-hooks@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "axios-hooks@npm:1.10.0"
+  dependencies:
+    "@babel/runtime": 7.9.2
+    lru-cache: 5.1.1
+  peerDependencies:
+    axios: ^0.18.0 || ^0.19.0
+    react: ^16.8.0-0
+  checksum: 3/356a8fe8bec23970e94c74255607c5948a9f4f553136b596a66eb6ec794282358ba58e245d91faf640fe31d7d722ac2931580b884b76e560303052e561b86a73
   languageName: node
   linkType: hard
 
@@ -6300,6 +6322,7 @@ __metadata:
     "@types/react-router-dom": ^5.1.5
     "@yarnpkg/pnpify": ^2.0.0-rc.22
     axios: ^0.19.2
+    axios-hooks: ^1.10.0
     d3-drag: ^1.2.5
     d3-force: ^2.0.1
     d3-selection: ^1.4.1
@@ -9817,6 +9840,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:5.1.1, lru-cache@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "lru-cache@npm:5.1.1"
+  dependencies:
+    yallist: ^3.0.2
+  checksum: 3/ffd9a280fa3400e731265db502270c2a65432f3fbfac23d480c72f675ec16dbbeddd57d4baf7aca70ab7af49949fad1bcaaf5a5e6e1cfed7316de71bb5dddf1c
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^4.0.1":
   version: 4.1.5
   resolution: "lru-cache@npm:4.1.5"
@@ -9824,15 +9856,6 @@ fsevents@^1.2.7:
     pseudomap: ^1.0.2
     yallist: ^2.1.2
   checksum: 3/6a098d23629357451d4324e1e4fefccdd6df316df29e25571c6148220ced923258381ebeafdf919f90e28c780b650427390582618c1d5fe097873e656d062511
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "lru-cache@npm:5.1.1"
-  dependencies:
-    yallist: ^3.0.2
-  checksum: 3/ffd9a280fa3400e731265db502270c2a65432f3fbfac23d480c72f675ec16dbbeddd57d4baf7aca70ab7af49949fad1bcaaf5a5e6e1cfed7316de71bb5dddf1c
   languageName: node
   linkType: hard
 
