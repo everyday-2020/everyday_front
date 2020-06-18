@@ -10,33 +10,29 @@ import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
 import ShareRoom from "../components/shareRoom";
-import { getVideos, patchRoom, getRooms, getVideo } from "../api";
+import { getVideos, patchRoom, getRooms, getVideo, postVideo } from "../api";
 
 const Room: React.FC = () => {
-  //const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
   const [dates, setDates] = useState<{ [key: string]: VideoEntity[] }>({});
-
-  useEffect(() => {
+  const fetchDates = () => {
     getVideos(inviteCode).then((videos) => {
-      console.log("get videos")
+      console.log("get videos");
       setDates(
         groupBy(videos, (video) => new Date(video.created_at).toDateString())
       );
-
     });
+  };
+  useEffect(() => {
+    fetchDates();
   }, []);
 
-  const [open, setOpen] = useState(false);
-  
-  const handleClickYes = () => {
-    patchRoom() 
-    handleClose();
-  }
-  const handleClose = () => {
-    setOpen(false);
-  }
+  const onVideoSubmit = (video: File) => {
+    postVideo(inviteCode, video);
+    fetchDates();
+  };
+
   return (
     <>
       <div className={styles.content}>
@@ -55,19 +51,19 @@ const Room: React.FC = () => {
                   playVideo={(video?: VideoEntity) => {
                     if (video) {
                       getVideo(video.id);
+                      fetchDates();
                     }
                     playVideo(video);
                   }}
                 />
               );
             })}
-          <VideoSelect inviteCode={inviteCode} />
+          <VideoSelect onVideoSubmit={onVideoSubmit} />
         </div>
       </div>
       {playingVideo && (
         <VideoPlayer video={playingVideo} playVideo={playVideo} />
       )}
-
     </>
   );
 };

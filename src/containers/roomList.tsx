@@ -13,14 +13,19 @@ interface RoomListProps {}
 const RoomList: FC<RoomListProps> = () => {
   const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [userInfo, setUser] = useState<UserEntity>(userMock);
-
-  useEffect(() => {
-    (async () => {
-      const rooms = await getRooms();
+  const fetchRooms = () => {
+    getRooms().then((rooms) => {
       setRooms(rooms);
-      const userInfo = await getUser();
+    });
+  };
+  const fetchUserInfo = () => {
+    getUser().then((userInfo) => {
       setUser(userInfo);
-    })();
+    });
+  };
+  useEffect(() => {
+    fetchRooms();
+    fetchUserInfo();
   }, []);
   return (
     <div className={styles["root"]}>
