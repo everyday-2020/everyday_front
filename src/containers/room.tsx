@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 
 import DateBoard from "../components/dateboard";
@@ -14,18 +14,23 @@ import { getVideo, postVideo, useGetVideos, patchRoom, getRoom } from "../api";
 const Room: React.FC = () => {
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
+  const history = useHistory();
   const [{ data: videos, error }, refetchVideos] = useGetVideos(inviteCode);
-  if (error?.response?.status === 403) {
-    getRoom(inviteCode).catch((error) => {
-      const response = {...error};
-      const roomTitle = response.response.data.title;
-      if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`) == true) {
-        patchRoom(inviteCode).then(() => {
-          refetchVideos();
-        });
-      };
-    });
-  };
+  useEffect(() => {
+    if (error?.response?.status === 403) {
+      getRoom(inviteCode).catch((error) => {
+        const response = { ...error };
+        const roomTitle = response.response.data.title;
+        if (window.confirm(`${roomTitle} 방에 정말 참여하시겠습니까?`)) {
+          patchRoom(inviteCode).then(() => {
+            refetchVideos();
+          });
+        } else {
+          history.push("/rooms");
+        }
+      });
+    }
+  }, [error]);
   const dates = groupBy(videos, (video) =>
     new Date(video.created_at).toDateString()
   );
