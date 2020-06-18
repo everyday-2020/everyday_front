@@ -10,10 +10,9 @@ import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
 import ShareRoom from "../components/shareRoom";
-import { getVideos, patchRoom, getRooms, getVideo } from "../api";
+import { getVideos, patchRoom, getVideo } from "../api";
 
 const Room: React.FC = () => {
-  //const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
   const [dates, setDates] = useState<{ [key: string]: VideoEntity[] }>({});
@@ -24,19 +23,16 @@ const Room: React.FC = () => {
       setDates(
         groupBy(videos, (video) => new Date(video.created_at).toDateString())
       );
-
-    });
+    }).catch((error) => {
+      if(error.response?.status === 403){
+        if(window.confirm("Do you want to join in this room?")){
+          patchRoom();
+          return;
+        }
+      } 
+    })
   }, []);
 
-  const [open, setOpen] = useState(false);
-  
-  const handleClickYes = () => {
-    patchRoom() 
-    handleClose();
-  }
-  const handleClose = () => {
-    setOpen(false);
-  }
   return (
     <>
       <div className={styles.content}>
@@ -44,6 +40,7 @@ const Room: React.FC = () => {
           style={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
           <LogoBar />
+          <ShareRoom />
           {Object.keys(dates)
             .sort()
             .map((date) => {
