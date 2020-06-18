@@ -1,27 +1,42 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import {
-  BottomNavigationAction,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  IconButton,
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
 import { useHistory } from "react-router-dom";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
+import { postVideo } from "../api";
 
-export default function VideoSelect() {
-  const [videoURL, setVideo] = useState("");
+interface VideoSelectProps {
+  inviteCode: string;
+}
+
+const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
+  const [videoURL, setVideoUrl] = useState("");
+  const [video, setVideo] = useState<File>();
   const [open, setOpen] = useState(false);
 
   const history = useHistory();
 
-  const onVideoChange = (e: any) => {
+  const onVideoChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setVideo(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files) {
+      setVideoUrl(URL.createObjectURL(e.target.files[0]));
+      setVideo(e.target.files[0]);
+    }
     setOpen(true);
+  };
+  const onVideoSubmit = () => {
+    if (video) {
+      postVideo(inviteCode, video).then(() => {
+        setOpen(false);
+        history.push(".");
+      });
+    }
   };
 
   return (
@@ -66,17 +81,11 @@ export default function VideoSelect() {
             alignSelf: "center",
           }}
         >
-          <VideoThumbnail
-            videoUrl={videoURL}
-            maxWidth="100%"
-            maxHeight="100%"
-          />
+          <VideoThumbnail videoUrl={videoURL} />
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => {
-              history.push("/room");
-            }}
+            onClick={onVideoSubmit}
             style={{
               backgroundColor: "#2575fc",
               color: "#ffffff",
@@ -101,4 +110,6 @@ export default function VideoSelect() {
       </Dialog>
     </>
   );
-}
+};
+
+export default VideoSelect;
