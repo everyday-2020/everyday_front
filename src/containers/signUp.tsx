@@ -6,6 +6,7 @@ import {
   DialogContent,
   Container,
   CssBaseline,
+  Typography,
   Avatar,
 } from "@material-ui/core";
 import {
@@ -28,7 +29,7 @@ interface SignUpForm {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "#005bea",
+    background: "#ffffff",
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -41,14 +42,16 @@ const useStyles = makeStyles((theme) => ({
   profile: {
     width: theme.spacing(10),
     height: theme.spacing(10),
+    backgroundColor: "#868e96",
   },
 }));
 
 const tfStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "white",
-    borderRadius: 10,
     justifyContent: "center",
+    borderRadius: "4px",
+    boxShadow: "0px 0px 6px 2px rgba(0,0,0,0.1)",
   },
 }));
 const tf_theme = createMuiTheme({
@@ -75,15 +78,17 @@ const tf_theme = createMuiTheme({
 });
 
 const buttonStyles = makeStyles((theme) => ({
-  container: {
-    justifyContent: "center",
-    alignItmes: "center",
-  },
   button: {
-    backgroundColor: "#D3D3D3",
+    backgroundColor: "#ffffff",
+    boxShadow: "0px 0px 5px 2px rgba(0,0,0,0.1)",
     color: "#005bea",
     marginBottom: "10px",
     marginTop: "10px",
+  },
+  submit: {
+    backgroundColor: "#005bea",
+    boxShadow: "0px 0px 5px 2px rgba(0,0,0,0.1)",
+    color: "#ffffff",
   },
 }));
 
@@ -162,6 +167,20 @@ export default function SignUp() {
   return (
     <Container component="main" className={classes.root}>
       <CssBaseline />
+      <div>
+        <p
+          style={{
+            letterSpacing: "-0.2px",
+            textAlign: "center",
+            fontSize: "25px",
+            fontWeight: 600,
+            margin: "20px",
+          }}
+        >
+          {"Sign Up"}
+        </p>
+      </div>
+
       <Avatar className={classes.profile}>
         <div>
           {chosenEmoji ? (
@@ -177,7 +196,7 @@ export default function SignUp() {
               }}
             />
           ) : (
-            <span style={{ color: "#525252" }}> none </span>
+            <span style={{ color: "#ffffff" }}> none </span>
           )}
         </div>
       </Avatar>
@@ -246,11 +265,12 @@ export default function SignUp() {
                 }}
               />
             </ThemeProvider>
-            <div className={bt_classes.container}>
+            <div style={{ padding: "20px" }}>
               <Button
                 type="submit"
                 variant="outlined"
-                className={bt_classes.button}
+                className={bt_classes.submit}
+                fullWidth
               >
                 Sign Up
               </Button>
