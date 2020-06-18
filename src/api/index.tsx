@@ -70,3 +70,10 @@ export async function getVideos(
     })
     .then((response) => response.data);
 }
+
+export function patchRoom() {
+  const roomcode = window.location.href.split('/')[4];
+  const joinRoomUrl = roomUrl.concat('/', roomcode);
+  instance.patch(joinRoomUrl).then((response) => {alert("Join in this room successfully.")})
+
+}

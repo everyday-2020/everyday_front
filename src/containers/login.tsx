@@ -93,7 +93,7 @@ export default function SignIn() {
 
   const confirmSignIn = (e: any) => {
     e.preventDefault();
-
+    
     login(signInForm)
       .then(() => {
         history.push(redirect || "/");
@@ -102,7 +102,6 @@ export default function SignIn() {
         console.log(error);
         alert("Login Failed");
       });
-
     setForm({
       username: "",
       password: "",

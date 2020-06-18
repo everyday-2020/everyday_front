@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
 import { useParams } from "react-router-dom";
 import groupBy from "lodash/groupBy";
 
@@ -11,19 +10,35 @@ import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
 import { getVideos } from "../api";
+import ShareRoom from "../components/shareRoom";
+import { RoomEntity } from "../types/entities";
+import { patchRoom, getRooms } from "../api";
 
 const Room: React.FC = () => {
+  //const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
   const [playingVideo, playVideo] = useState<VideoEntity>();
   const { inviteCode } = useParams();
   const [dates, setDates] = useState<{ [key: string]: VideoEntity[] }>({});
 
   useEffect(() => {
     getVideos(inviteCode).then((videos) => {
+      console.log("get videos")
       setDates(
         groupBy(videos, (video) => new Date(video.created_at).toDateString())
       );
+
     });
   }, []);
+
+  const [open, setOpen] = useState(false);
+  
+  const handleClickYes = () => {
+    patchRoom()
+    handleClose();
+  }
+  const handleClose = () => {
+    setOpen(false);
+  }
   return (
     <>
       <div className={styles.content}>
@@ -39,11 +54,13 @@ const Room: React.FC = () => {
               />
             );
           })}
+        <ShareRoom/>
         <VideoSelect />
       </div>
       {playingVideo && (
         <VideoPlayer video={playingVideo} playVideo={playVideo} />
       )}
+
     </>
   );
 };
