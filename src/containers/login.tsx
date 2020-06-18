@@ -4,6 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import { login } from "../api";
 import { useHistory } from "react-router-dom";
+import queryString from "query-string";
 import {
   makeStyles,
   createMuiTheme,
@@ -78,6 +79,7 @@ export default function SignIn() {
   const button_classes = buttonStyles();
   const tf_classes = tfStyles();
   const history = useHistory();
+  const { redirect } = queryString.parse(history.location.search);
 
   const [signInForm, setForm] = useState<SignInForm>({
     username: "",
@@ -86,7 +88,7 @@ export default function SignIn() {
 
   const signUpPage = (e: any) => {
     e.preventDefault();
-    history.push("/signup");
+    history.push(`/signup?redirect=${redirect}`);
   };
 
   const confirmSignIn = (e: any) => {
@@ -94,7 +96,7 @@ export default function SignIn() {
 
     login(signInForm)
       .then(() => {
-        history.push("/");
+        history.push(redirect || "/");
       })
       .catch((error) => {
         console.log(error);

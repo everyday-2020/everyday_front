@@ -15,7 +15,7 @@ function RoutedApp() {
     (config) => config,
     (error) => {
       if (error.response?.status === 403) {
-        history.push("/signin");
+        history.push(`/signin?redirect=${history.location.pathname}`);
       }
       return Promise.reject(error);
     }
@@ -28,7 +28,7 @@ function RoutedApp() {
       <Route path="/room/:inviteCode">
         <Room />
       </Route>
-      <Route path="/makeroom">
+      <Route path="/room/create">
         <MakeRoom />
       </Route>
       <Route path="/signup">

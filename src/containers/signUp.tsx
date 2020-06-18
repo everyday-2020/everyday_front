@@ -17,6 +17,7 @@ import { signup } from "../api";
 import Picker from "emoji-picker-react";
 import BigEmoji from "../components/bigEmoji";
 import { useHistory } from "react-router-dom";
+import queryString from "query-string";
 
 interface SignUpForm {
   username: string;
@@ -98,6 +99,7 @@ export default function SignUp() {
     profile_pic: "",
   });
   const history = useHistory();
+  const { redirect } = queryString.parse(history.location.search);
 
   const [chosenEmoji, setChosenEmoji] = useState(null);
 
@@ -118,7 +120,7 @@ export default function SignUp() {
 
     signup(signUpForm)
       .then(() => {
-        history.push("/signin");
+        history.push(`/signin?redirect=${redirect}`);
       })
       .catch((error) => {
         console.log(error);
