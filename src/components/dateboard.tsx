@@ -7,7 +7,7 @@ import styles from "./dateboard.module.scss";
 interface DateBoardProps {
   date: Date;
   videos?: VideoEntity[];
-  playVideo: Dispatch<SetStateAction<VideoEntity | undefined>>;
+  playVideo: (VideoEntity) => void;
 }
 const DateBoard: FunctionComponent<DateBoardProps> = ({
   date,

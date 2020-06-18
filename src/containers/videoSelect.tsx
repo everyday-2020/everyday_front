@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import {
-  BottomNavigationAction,
   Button,
   Dialog,
   DialogActions,
@@ -8,111 +7,106 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import VideoThumbnail from "react-video-thumbnail";
-import { useHistory } from "react-router-dom";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
+import { postVideo } from "../api";
 
-export default function VideoSelect() {
-  const [videoURL, setVideo] = useState("");
-  const history = useHistory();
-  const onVideoChange = (e: any) => {
+interface VideoSelectProps {
+  inviteCode: string;
+}
+
+const VideoSelect: FC<VideoSelectProps> = ({ inviteCode }) => {
+  const [videoURL, setVideoUrl] = useState("");
+  const [video, setVideo] = useState<File>();
+  const [open, setOpen] = useState(false);
+
+  const onVideoChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setVideo(URL.createObjectURL(e.target.files[0]));
-    handleClickOpen();
-  };
-  //dialog
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
+    if (e.target.files) {
+      setVideoUrl(URL.createObjectURL(e.target.files[0]));
+      setVideo(e.target.files[0]);
+    }
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  //업로드 확인 dialog ()
-  const openDialog = (videoURL) => {
-    if (videoURL !== "") {
-      return (
-        <div>
-          <Dialog open={open} onClose={handleClose} maxWidth={"xs"}>
-            <DialogTitle
-              id="alert-dialog-title"
-              style={{ textAlign: "center" }}
-            >
-              {"이 비디오를 업로드 할까요?"}
-            </DialogTitle>
-            <DialogContent
-              style={{
-                width: 250,
-                height: 250,
-                overflow: "hidden",
-              }}
-            >
-              <VideoThumbnail videoUrl={videoURL} width={250} height={250} />
-            </DialogContent>
-            <DialogActions style={{ justifyContent: "center" }}>
-              <Button
-                onClick={() => {
-                  history.push("/room");
-                }}
-                variant="outlined"
-                style={{
-                  backgroundColor: "#2575fc",
-                  color: "#ffffff",
-                }}
-                autoFocus
-              >
-                네
-              </Button>
-              <Button
-                onClick={handleClose}
-                variant="outlined"
-                style={{
-                  borderColor: "#2575fc",
-                  color: "#2575fc",
-                }}
-              >
-                아니오
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle id="alert-dialog-title">
-              {"비디오를 선택해주세요."}
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                닫기
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      );
+  const onVideoSubmit = () => {
+    if (video) {
+      postVideo(inviteCode, video).then(() => {
+        setOpen(false);
+      });
     }
   };
+
   return (
-    <div>
-      <div>
-        <input
-          type="file"
-          id="upload_file"
-          multiple
-          onChange={onVideoChange}
-          style={{ display: "none" }}
-        />
-      </div>
-      <label htmlFor="upload_file">
-        <BottomNavigationAction
-          component="span"
-          label="Upload"
-          showLabel
-          icon={<AddBoxOutlinedIcon />}
+    <>
+      <input
+        type="file"
+        id="upload_file"
+        multiple
+        onChange={onVideoChange}
+        style={{ display: "none" }}
+      />
+      <label
+        htmlFor="upload_file"
+        style={{
+          marginTop: "auto",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginBottom: "30px",
+        }}
+      >
+        <AddBoxOutlinedIcon
+          style={{
+            backgroundColor: "gray",
+            width: "100px",
+            borderRadius: "1.5rem",
+            padding: "10px",
+          }}
         />
       </label>
-      {openDialog(videoURL)}
-    </div>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        maxWidth={"xs"}
+      >
+        <DialogTitle>{"이 비디오를 업로드 할까요?"}</DialogTitle>
+        <DialogContent
+          style={{
+            overflow: "hidden",
+            padding: 0,
+            alignSelf: "center",
+            maxHeight: "320px",
+          }}
+        >
+          <VideoThumbnail videoUrl={videoURL} />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={onVideoSubmit}
+            style={{
+              backgroundColor: "#2575fc",
+              color: "#ffffff",
+            }}
+            autoFocus
+          >
+            네
+          </Button>
+          <Button
+            onClick={() => {
+              setOpen(false);
+            }}
+            variant="outlined"
+            style={{
+              borderColor: "#2575fc",
+              color: "#2575fc",
+            }}
+          >
+            아니오
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
-}
+};
+
+export default VideoSelect;

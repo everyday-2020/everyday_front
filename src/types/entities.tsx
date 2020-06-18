@@ -8,13 +8,13 @@ export interface VideoEntity extends Entity {
   clicks: number;
   length: number;
   user: UserEntity;
-  file_path: string;
   clip: {
     url: string;
     thumb: {
       url: string;
     };
   };
+  user_nickname?: string;
 }
 
 export interface RoomEntity extends Entity {

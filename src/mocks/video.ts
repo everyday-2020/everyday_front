@@ -15,7 +15,6 @@ export const vids: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-3.mp4",
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -35,8 +34,6 @@ export const vids: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path:
-      "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/74/Landscape_of_rural_England.webm/Landscape_of_rural_England.webm.360p.vp9.webm",
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -56,7 +53,7 @@ export const vids: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-2.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -79,7 +76,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-1.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -99,7 +96,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-0.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -119,7 +116,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-10.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -139,7 +136,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-4.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -159,7 +156,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-5.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -179,7 +176,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-6.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -199,7 +196,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-9.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -219,8 +216,6 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path:
-      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/ocean-small.webm",
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },
@@ -240,7 +235,7 @@ export const vids2: VideoEntity[] = [
       username: "test",
       profile_pic: "dog",
     },
-    file_path: process.env.PUBLIC_URL + "/video-7.mp4",
+
     clip: {
       url: process.env.PUBLIC_URL + "/video-3.mp4",
       thumb: { url: process.env.PUBLIC_URL + "/thumbnail.jpg" },

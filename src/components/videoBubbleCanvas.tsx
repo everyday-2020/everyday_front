@@ -11,6 +11,7 @@ import { drag } from "d3-drag";
 
 import { VideoEntity } from "../types/entities";
 import "./videoBubbleCanvas.css";
+import { baseURL } from "../api";
 
 interface VideoBubbleCanvasProps {
   date: Date;
@@ -76,7 +77,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       );
     const captions = groups
       .append("text")
-      .text(({ user }: VideoEntity) => user.nickname)
+      .text(({ user_nickname }: VideoEntity) => user_nickname || "")
       .attr("text-anchor", "middle")
       .attr("fill", "#ffffff");
 
@@ -91,7 +92,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       .append("image")
       .attr("width", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
       .attr("height", (d, i) => 2 * radiuses[i] * VIDEO_CLOSEUP)
-      .attr("xlink:href", (d) => d.clip.thumb.url)
+      .attr("xlink:href", (d) => `${baseURL}${d.clip.thumb.url}`)
       .on("click", (d) => {
         playVideo(d);
       })

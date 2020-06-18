@@ -1,6 +1,7 @@
 import React, { FC, Dispatch, SetStateAction } from "react";
 
 import { VideoEntity } from "../types/entities";
+import { baseURL } from "../api";
 
 interface VideoPlayerProps {
   video: VideoEntity;
@@ -18,10 +19,10 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ video, playVideo }) => {
         alignItems: "center",
         backgroundColor: "#000000cc",
       }}
-      onClick={() => playVideo(video)}
+      onClick={() => playVideo(undefined)}
     >
       <video controls style={{ width: "100vw" }}>
-        <source src={video.clip.url} />
+        <source src={baseURL + video.clip.url} />
       </video>
     </div>
   );

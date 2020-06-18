@@ -9,10 +9,8 @@ import VideoSelect from "./videoSelect";
 import { VideoEntity } from "../types/entities";
 import VideoPlayer from "../components/videoPlayer";
 import styles from "./room.module.scss";
-import { getVideos } from "../api";
 import ShareRoom from "../components/shareRoom";
-import { RoomEntity } from "../types/entities";
-import { patchRoom, getRooms } from "../api";
+import { getVideos, patchRoom, getRooms, getVideo } from "../api";
 
 const Room: React.FC = () => {
   //const [rooms, setRooms] = useState<RoomEntity[]>(roomsMock);
@@ -33,7 +31,7 @@ const Room: React.FC = () => {
   const [open, setOpen] = useState(false);
   
   const handleClickYes = () => {
-    patchRoom()
+    patchRoom() 
     handleClose();
   }
   const handleClose = () => {
@@ -42,20 +40,29 @@ const Room: React.FC = () => {
   return (
     <>
       <div className={styles.content}>
-        <LogoBar />
-        {Object.keys(dates)
-          .sort()
-          .map((date) => {
-            return (
-              <DateBoard
-                date={new Date(date)}
-                videos={dates[date]}
-                playVideo={playVideo}
-              />
-            );
-          })}
-        <ShareRoom/>
-        <VideoSelect />
+        <div
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
+          <LogoBar />
+          {Object.keys(dates)
+            .sort()
+            .map((date) => {
+              return (
+                <DateBoard
+                  key={date}
+                  date={new Date(date)}
+                  videos={dates[date]}
+                  playVideo={(video?: VideoEntity) => {
+                    if (video) {
+                      getVideo(video.id);
+                    }
+                    playVideo(video);
+                  }}
+                />
+              );
+            })}
+          <VideoSelect inviteCode={inviteCode} />
+        </div>
       </div>
       {playingVideo && (
         <VideoPlayer video={playingVideo} playVideo={playVideo} />

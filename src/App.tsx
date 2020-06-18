@@ -14,8 +14,7 @@ function RoutedApp() {
   instance.interceptors.response.use(
     (config) => config,
     (error) => {
-      if (error.response?.status === 403) {
-        console.log(history.location);
+      if (error.response?.status === 401) {
         history.push(`/signin?redirect=${history.location.pathname}`);
       }
       return Promise.reject(error);
