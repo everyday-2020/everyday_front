@@ -67,10 +67,18 @@ const buttonStyles = makeStyles((theme) => ({
   container: {
     marginTop: "40px",
   },
-  submit: {
-    backgroundColor: "#D3D3D3",
-    color: "#005bea",
+  signin: {
+    height: "45px",
+    backgroundColor: "#005BEB",
+    border: "1px solid #ffffff",
+    borderRadius: "10px",
     marginBottom: "10px",
+    color: "#ffffff"
+  },
+  signup: {
+    borderRadius: "8px",
+    backgroundColor: "#f5f5f5",
+    height: "45px",
   },
 }));
 
@@ -141,6 +149,7 @@ export default function SignIn() {
                 label="Username"
                 name="username"
                 autoComplete="username"
+                value={signInForm.username}
                 autoFocus
                 InputProps={{
                   disableUnderline: true,
@@ -157,6 +166,7 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 id="password"
+                value={signInForm.password}
                 autoComplete="current-password"
                 InputProps={{
                   disableUnderline: true,
@@ -168,7 +178,7 @@ export default function SignIn() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                className={button_classes.submit}
+                className={button_classes.signin}
               >
                 Sign In
               </Button>
@@ -176,7 +186,7 @@ export default function SignIn() {
                 onClick={signUpPage}
                 fullWidth
                 variant="contained"
-                className={button_classes.submit}
+                className={button_classes.signup}
               >
                 Sign Up
               </Button>

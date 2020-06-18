@@ -7,10 +7,17 @@ import {
   Button,
   Dialog,
   DialogContent,
+  Avatar,
 } from "@material-ui/core";
 import { makeRoom } from "../api";
 import Picker from "emoji-picker-react";
 import { useHistory } from "react-router-dom";
+import BigEmoji from "../components/bigEmoji";
+import {
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core/styles";
 
 interface MakeRoomForm {
   title: string;
@@ -18,6 +25,56 @@ interface MakeRoomForm {
   complete_at: string;
   category: string;
 }
+
+const useStyles = makeStyles((theme) => ({
+  profile: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+    backgroundColor: "#868e96",
+  },
+  button: {
+    backgroundColor: "#ffffff",
+    boxShadow: "0px 0px 5px 2px rgba(0,0,0,0.1)",
+    color: "#005bea",
+    marginBottom: "10px",
+    marginTop: "10px",
+  },
+  submit: {
+    backgroundColor: "#005bea",
+    boxShadow: "0px 0px 5px 2px rgba(0,0,0,0.1)",
+    color: "#ffffff",
+    margin: "20px",
+  },
+}));
+
+const tfStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "white",
+    justifyContent: "center",
+    borderRadius: "4px",
+    boxShadow: "0px 0px 6px 2px rgba(0,0,0,0.1)",
+  },
+}));
+const tf_theme = createMuiTheme({
+  overrides: {
+    MuiFilledInput: {
+      root: {
+        backgroundColor: "white",
+        borderTopLeftRadius: "4px",
+        borderTopRightRadius: "4px",
+        borderRadius: "4px",
+        "&$focused": {
+          backgroundColor: "transparent",
+        },
+        "&:hover": {
+          "@media (hover: none)": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
+  },
+});
 
 const marks = [
   {
@@ -39,6 +96,8 @@ const marks = [
 ];
 
 const MakeRoom: React.FC = () => {
+  const classes = useStyles();
+  const tf_classes = tfStyles();
   const [makeRoomForm, setForm] = useState<MakeRoomForm>({
     title: "",
     description: "",
@@ -126,7 +185,20 @@ const MakeRoom: React.FC = () => {
       className="content"
       style={{ height: "calc(100vh - 56px)", overflow: "scroll" }}
     >
-      <LogoBar />
+      <div>
+        <p
+          style={{
+            letterSpacing: "-0.5px",
+            textAlign: "center",
+            fontSize: "25px",
+            fontWeight: 600,
+            margin: "20px",
+          }}
+        >
+          {"Create Room"}
+        </p>
+      </div>
+
       <form
         onSubmit={confirmRoom}
         style={{
@@ -135,34 +207,73 @@ const MakeRoom: React.FC = () => {
           margin: 20,
         }}
       >
-        <TextField
-          id="title"
-          onChange={changeForm}
-          required
-          label="Room title"
-          InputLabelProps={{
-            shrink: true,
-            style: { color: "#2575fc", fontSize: 20 },
-          }}
-          placeholder="room title"
-          margin="normal"
-          variant="standard"
-          fullWidth
-        />
-        <TextField
-          id="description"
-          onChange={changeForm}
-          required
-          label="Description"
-          InputLabelProps={{
-            shrink: true,
-            style: { color: "#2575fc", fontSize: 20 },
-          }}
-          placeholder="description"
-          margin="normal"
-          variant="standard"
-          fullWidth
-        />
+        <div>
+          <Avatar className={classes.profile}>
+            <div>
+              {chosenEmoji ? (
+                <BigEmoji
+                  emoji={makeRoomForm.category}
+                  style={{
+                    backgroundColor: "transparent",
+                    fontSize: "3.75rem",
+                    width: "4rem",
+                    height: "4rem",
+                    marginLeft: "auto",
+                    alignSelf: "center",
+                  }}
+                />
+              ) : (
+                <span style={{ color: "#ffffff" }}> none </span>
+              )}
+            </div>
+          </Avatar>
+          <div>
+            <Button
+              onClick={showPicker}
+              variant="contained"
+              size="small"
+              className={classes.button}
+            >
+              Choose
+            </Button>
+          </div>
+        </div>
+        <ThemeProvider theme={tf_theme}>
+          <TextField
+            id="title"
+            className={tf_classes.root}
+            onChange={changeForm}
+            required
+            label="Room title"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+            variant="filled"
+            value={makeRoomForm.title}
+            fullWidth
+          />
+          <TextField
+            id="description"
+            onChange={changeForm}
+            className={tf_classes.root}
+            required
+            label="Description"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+            variant="filled"
+            value={makeRoomForm.description}
+            fullWidth
+          />
+        </ThemeProvider>
         <Typography
           id="duration-slider"
           gutterBottom
@@ -173,47 +284,17 @@ const MakeRoom: React.FC = () => {
         <Slider
           id="duration"
           onChange={changeDuration}
-          defaultValue={7}
+          defaultValue={0}
           getAriaValueText={valueDuration}
           aria-labelledby="duration-slider"
           valueLabelDisplay="auto"
           step={1}
-          min={1}
+          min={0}
           max={30}
           marks={marks}
         />
-        <div>
-          <Typography
-            id="category-picker"
-            gutterBottom
-            style={{ marginTop: 15, fontSize: 15, color: "#2575fc" }}
-          >
-            Category * :{" "}
-            {chosenEmoji ? (
-              <span>{chosenEmoji}</span>
-            ) : (
-              <span style={{ color: "#525252" }}>Choose the category</span>
-            )}
-            <Button
-              onClick={showPicker}
-              variant="contained"
-              size="small"
-              style={{
-                marginLeft: "5px",
-                color: "#2575fc",
-                borderColor: "#2575fc",
-              }}
-            >
-              Choose
-            </Button>
-          </Typography>
-        </div>
-        <Button
-          type="submit"
-          variant="outlined"
-          style={{ margin: 20, color: "#2575fc", borderColor: "#2575fc" }}
-        >
-          Make new room
+        <Button type="submit" className={classes.submit} variant="outlined">
+          Create new room
         </Button>
       </form>
       <Dialog open={open} onClose={handleClose} maxWidth={"sm"}>
