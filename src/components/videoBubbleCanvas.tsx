@@ -153,7 +153,7 @@ const VideoBubbleCanvas: FC<VideoBubbleCanvasProps> = ({
       ref={svgRef}
       style={{
         flex: 1,
-        minHeight: `${videos.length * 64}px`,
+        minHeight: `${videos.length * 40}px`,
         fontSize: `${FONT_SIZE}`,
       }}
       xmlns="http://www.w3.org/2000/svg"

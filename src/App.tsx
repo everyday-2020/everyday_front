@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 import { configure } from "axios-hooks";
 
@@ -12,19 +12,19 @@ import { instance } from "./api";
 
 function RoutedApp() {
   const history = useHistory();
-  instance.interceptors.response.use(
-    (config) => config,
-    (error) => {
-      if (error.response?.status === 401) {
-        history.push(`/signin?redirect=${history.location.pathname}`);
-      } else if (error.response && error.response?.status !== 403) {
-        console.log(error);
-        alert(error.response.body?.join(" ") || "Failed");
+    instance.interceptors.response.use(
+      (config) => config,
+      (error) => {
+        if (error.response?.status === 401) {
+          history.push(`/signin?redirect=${history.location.pathname}`);
+        } else if (error.response && error.response?.status !== 403) {
+          console.log(error);
+          alert(error.response.body?.join(" ") || "Failed");
+        }
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
-    }
-  );
-  configure({ cache: false, axios: instance });
+    );
+    configure({ cache: false, axios: instance });
 
   return (
     <Switch>

@@ -13,7 +13,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ video, playVideo }) => {
       style={{
         position: "absolute",
         top: 0,
-        height: "100vh",
+        height: "100%",
         width: "100vw",
         display: "flex",
         alignItems: "center",

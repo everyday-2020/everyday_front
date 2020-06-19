@@ -118,7 +118,7 @@ export default function SignIn() {
       ...signInForm,
       [e.target.id]: e.target.value,
     });
-    console.log("signInForm", signInForm);
+    //console.log("signInForm", signInForm);
   };
 
   return (

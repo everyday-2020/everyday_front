@@ -39,15 +39,17 @@ const VideoSelect: FC<VideoSelectProps> = ({ onVideoSubmit }) => {
       <label
         htmlFor="upload_file"
         style={{
-          marginTop: "auto",
           marginLeft: "auto",
           marginRight: "auto",
-          marginBottom: "30px",
+          position: 'sticky',
+          bottom: '50px',
+          left: "calc(50vw - 60px)"
         }}
       >
         <AddBoxOutlinedIcon
           style={{
-            backgroundColor: "gray",
+            backgroundColor: "whitesmoke",
+            boxShadow: "0px 0px 0px 2px rgba(0,0,0,0.1)",
             width: "100px",
             borderRadius: "1.5rem",
             padding: "10px",
