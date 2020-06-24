@@ -1,6 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
 
-import { roomsMock, userMock } from "../mocks/rooms";
 import styles from "./roomList.module.scss";
 import UserProfile from "../components/userCard";
 import LogoBar from "../components/logobar";
@@ -11,8 +10,8 @@ import Footer from "../components/footer";
 interface RoomListProps {}
 
 const RoomList: FC<RoomListProps> = () => {
-  const [{ data: rooms = roomsMock }, refetchRooms] = useGetRooms();
-  const [{ data: userInfo = userMock }] = useGetUser();
+  const [{ data: rooms = [] }, refetchRooms] = useGetRooms();
+  const [{ data: userInfo }] = useGetUser();
   const logout = () => {
     postLogout();
   };
